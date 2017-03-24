@@ -1,0 +1,6 @@
+# Ignore folders
+.gradle/
+.idea/
+
+# Ignore files
+*.iml
