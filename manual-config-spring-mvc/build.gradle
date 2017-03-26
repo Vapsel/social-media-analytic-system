@@ -7,6 +7,9 @@ buildscript {
 apply plugin: 'application'
 apply plugin: 'war'
 
+// Workaround to run 'build' task with this project as pipeline
+mainClassName = 'snas.config.SpringWebAppInitializer'
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
