@@ -1,21 +1,21 @@
-// All modules have their own independent build configurations
-//subprojects {
-//    buildscript {
-//        repositories {
-//            mavenCentral()
-//        }
-//    }
-//
-//    apply plugin: 'java'
-//    apply plugin: 'idea'
-//
-//    sourceCompatibility = 1.8
-//    targetCompatibility = 1.8
-//
-//    repositories {
-//        mavenCentral()
-//    }
-//
-//    dependencies {
-//    }
-//}
+// Some modules override this options with their own build configurations
+subprojects {
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+    }
+}
