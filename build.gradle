@@ -16,5 +16,7 @@ subprojects {
     }
 
     dependencies {
+        //https://mvnrepository.com/artifact/com.restfb/restfb
+        compile group: 'com.restfb', name: 'restfb', version: '2.0.0-rc.1'
     }
 }

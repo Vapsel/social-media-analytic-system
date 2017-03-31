@@ -1,4 +1,4 @@
-package snas.spring.boot.sample;
+package smas.spring.boot.sample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
