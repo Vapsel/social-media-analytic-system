@@ -1,3 +1,4 @@
+// Some modules override this options with their own build configurations
 subprojects {
     buildscript {
         repositories {
