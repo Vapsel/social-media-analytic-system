@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" >
 <head th:include="fragments/head::head">
     <title id="pageTitle">SMAS | Log In</title>
+    <script th:src="@{/vendor/js/fblogin.js}"></script>
 </head>
 <body>
 
@@ -108,18 +109,21 @@
             return;
         }
 
-        request.open("POST", '/login', true);
+        request.open("POST", '/userJson', true);
         request.send(body);
-        console.log(body);
     }
 
 
 </script>
 
-<div id="status"></div>
-
 <div class="container-fluid">
-        <div class="row">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <img th:src="@{/img/main.jpg}" alt="" class="img-responsive text-center">
+        </div>
+    </div>
+    <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6 text-center">
                 <div class="login">
@@ -129,16 +133,15 @@
                         Join us
                     </fb:login-button>
 
-                    <br/>
+                    I am a customer, and I want see you offers for me
 
-                    <div id="debugTag"></div>
+                    |
 
-                    <br/>
-
-                    <div id="user-info"></div>
+                    I am want to publish my trip-offer or hotel offer
                 </div>
             </div>
         </div>
+
 </div>
 
 </body>

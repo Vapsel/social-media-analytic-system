@@ -11,3 +11,7 @@
     margin: 5px;
     padding: 5px;
 }
+
+.img-responsive {
+    margin: 0 auto;
+}
