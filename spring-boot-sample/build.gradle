@@ -23,7 +23,7 @@ jar {
     baseName = 'spring-boot-sample'
     version =  '0.0.1'
     manifest {
-        attributes 'Main-Class': 'snas.spring.boot.sample.Application'
+        attributes 'Main-Class': 'smas.spring.boot.sample.Application'
     }
 }
 
@@ -33,6 +33,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
     compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
+
+    //https://mvnrepository.com/artifact/com.restfb/restfb
+    compile group: 'com.restfb', name: 'restfb', version: '2.0.0-rc.1'
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 
