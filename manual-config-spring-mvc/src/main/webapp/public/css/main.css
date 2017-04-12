@@ -1,0 +1,17 @@
+.body{
+    font-size: 16px;
+    font-family: serif;
+    background-color: #fff;
+}
+
+.login{
+    display: block;
+    border: 1px #aaa solid;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.img-responsive {
+    margin: 0 auto;
+}
