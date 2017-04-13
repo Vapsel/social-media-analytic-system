@@ -19,16 +19,20 @@ import static java.nio.file.StandardOpenOption.WRITE;
  */
 public class CnfFileCreator {
 
-    public void createCnfFile(IVarAggregator aggregator){
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+    private static final String CNF_FILE_SUFFIX = "_smas_problem.cnf";
+
+    public void transformToCnfFile(IVarAggregator aggregator){
+        // todo return path to file
 
         Collection<Collection<String>> prefCategories = aggregator.aggregateAll();
         if (prefCategories == null){
-            throw new IllegalArgumentException("Parameter can't be null");
+            throw new IllegalArgumentException("Aggregator can't return null");
         }
 
+        List<String> lines = new ArrayList<>(prefCategories.size() * 2);
+        // todo use indexes as varNumber
         int i = 0;
-        List<String> lines = new ArrayList<>(); // todo initial capacity
-        //init line
         for(Collection<String> category : prefCategories){
 
             StringBuilder commentLine = new StringBuilder("c ");
@@ -46,8 +50,12 @@ public class CnfFileCreator {
         String problemLine = String.format("p cnf %d %d", i, prefCategories.size());
         lines.add(0, problemLine);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddTHH:mm:ss");
-        String filename = LocalDateTime.now().format(formatter) + "_smas_problem.cnf";
+        writeFile(lines);
+    }
+
+    private void writeFile(List<String> lines){
+
+        String filename = LocalDateTime.now().format(formatter) + CNF_FILE_SUFFIX;
         try {
             Files.write(Paths.get("./" + filename), lines, CREATE_NEW, WRITE);
         } catch (IOException e) {
@@ -55,6 +63,5 @@ public class CnfFileCreator {
             e.printStackTrace();
         }
     }
-
 
 }

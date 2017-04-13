@@ -19,7 +19,7 @@ public class FileExample {
     public static void main(String[] args) {
         TestAggregator testAggregator = new TestAggregator();
         CnfFileCreator creator = new CnfFileCreator();
-        creator.createCnfFile(testAggregator);
+        creator.transformToCnfFile(testAggregator);
 
         ISolver solver = SolverFactory.newDefault();
         solver.setTimeout(3600); // 1 hour timeout
