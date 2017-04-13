@@ -1,3 +1,2 @@
-include 'spring-boot-sample'
 include 'manual-config-spring-mvc'
 include 'solver'

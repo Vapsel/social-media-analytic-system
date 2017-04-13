@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:include="fragments/head::head">
+    <meta charset="UTF-8">
+    <title id="pageTitle">SMAS | Home</title>
+</head>
+
+<body>
+
+<script th:src="@{/public/js/fbapi.js}"></script>
+
+<div th:replace="fragments/head::header"></div>
+
+<section>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-1"></div>
+
+            <div class="col-10 info">
+
+                <div class="fb-container">
+                    <div class="fb-header">
+                        Whatever, do all in one click!
+                    </div>
+                    <div class="fb-body">
+                        <button id="fbBtn" onclick="login()">Start!</button>
+                    </div>
+                </div>
+
+                <div id="accordion" role="tablist" aria-multiselectable="true" class="accordion">
+                    <div class="card">
+                        <div class="card-header step-header" role="tab" id="headingOne">
+                            <h5 class="mb-0">
+                                <div class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                     href="#collapseOne"
+                                     aria-expanded="true" aria-controls="collapseOne">
+                                    Step 1 - Sign Up using Facebook account
+                                </div>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="card-block step-body">
+                                <p>Here goes explanation why we want use your Facebook account.</p>
+
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu malesuada dui,
+                                    vitae blandit tellus. Aenean sodales sem erat, at interdum augue hendrerit
+                                    tempor. Nullam vestibulum id risus vitae lacinia. Ut condimentum cursus ante eu
+                                    pretium. In tristique finibus ullamcorper. </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header step-header" role="tab" id="headingTwo">
+                            <h5 class="mb-0">
+                                <div class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                     href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Step 2 - Give us access to your facebook profile
+                                </div>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="card-block step-body">
+                                <p>Here goes explanation what permissions we are asking and what for.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu malesuada
+                                    dui,
+                                    vitae blandit tellus. Aenean sodales sem erat, at interdum augue hendrerit
+                                    tempor. Nullam vestibulum id risus vitae lacinia. Ut condimentum cursus ante eu
+                                    pretium. In tristique finibus ullamcorper.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header step-header" role="tab" id="headingThree">
+                            <h5 class="mb-0">
+                                <div class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                     href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Step 3 - Take a look at our offers
+                                </div>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="card-block step-body">
+                                <p>Here goes explanation what we were offering for a client</p>
+
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu malesuada dui,
+                                    vitae blandit tellus. Aenean sodales sem erat, at interdum augue hendrerit
+                                    tempor. Nullam vestibulum id risus vitae lacinia. Ut condimentum cursus ante eu
+                                    pretium. In tristique finibus ullamcorper. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <div class="row no-gutters">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <!--<img src="img/main.jpg" alt="" class="img-fluid">-->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

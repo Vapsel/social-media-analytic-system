@@ -1,6 +1,6 @@
 jar {
     manifest {
-        attributes 'Main-Class': 'com.snas.sample.Demo'
+        attributes 'Main-Class': 'com.smas.sample.Demo'
     }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }

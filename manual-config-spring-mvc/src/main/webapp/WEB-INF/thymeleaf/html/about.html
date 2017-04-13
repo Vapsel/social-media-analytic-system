@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:include="fragments/head::head">
+    <meta charset="UTF-8">
+    <title id="pageTitle">SMAS | About</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/head::header"></div>
+
+<section>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-1"></div>
+
+            <div class="col-10 info">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="info-image">
+                                <img th:src="@{/public/img/queen.jpg}" alt="" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="info-text">
+                                <p>Actually, we added this page to have more then two link in the navigation bar.
+                                    However,
+                                    there
+                                    is
+                                    a
+                                    chance that some day description will be added for what it is going on. But now,
+                                    just
+                                    enjoy
+                                    fukin
+                                    funny image.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

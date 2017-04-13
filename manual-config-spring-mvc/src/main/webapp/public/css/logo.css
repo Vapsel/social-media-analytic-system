@@ -1,0 +1,13 @@
+#logo {
+    text-transform: uppercase;
+    font-weight: bolder;
+    font-family: 'Passion One', cursive;
+
+    font-size: 44px;
+    letter-spacing: 2px;
+}
+
+#a{
+    /*color: rgb(254, 224, 200);*/
+    color: rgb(61, 50, 54);
+}

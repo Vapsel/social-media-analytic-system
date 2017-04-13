@@ -1,0 +1,95 @@
+body {
+    font-family: 'Vollkorn', serif;
+    font-size: 16px;
+
+
+    /*!*background*!
+    background: url('../img/back.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;*/
+}
+
+section {
+    margin: 100px 0 20px 0;
+    position: relative;
+}
+
+.navbar {
+    border-bottom: 1px #555 solid;
+}
+
+.info {
+    background-color: #f7f7f7;
+    display: block;
+    padding: 20px;
+    border-radius: 10px;
+    /*border: 1px #999 solid;*/
+}
+
+.info-text{
+    padding: 5px;
+    margin: 5px;
+}
+
+.info-image{
+    padding: 5px;
+    margin: 5px;
+}
+
+.fb-container {
+    text-align: center;
+    display: block;
+    padding: 5px;
+    margin: 15px;
+}
+
+.fb-container .fb-header{
+    font-size: 22px;
+    display: block;
+    padding: 5px;
+    margin: 5px;
+}
+
+.fb-container .fb-body {
+
+}
+
+#fbBtn {
+    color: #fff;
+    background-color: #4080ff;
+    padding: 5px 70px 5px 70px;
+    border: none;
+    border-radius: 1px;
+
+    transition-property: background;
+    transition-duration: 0.2s;
+    transition-timing-function: linear, ease-in;
+}
+
+#fbBtn:hover {
+    background-color: #3b5999;
+
+    transition-property: background;
+    transition-duration: 0.5s;
+    transition-timing-function: linear, ease-in;
+}
+
+.step-header {
+    font-size: 22px;
+    border-radius: 5px;
+    background: #afc0d7;
+    padding: 5px;
+    cursor: pointer;
+    
+}
+
+.step-body{
+    background: #d6dde8;
+    padding: 15px;
+}
+
+.accordion{
+    margin-top: 15px;
+}
