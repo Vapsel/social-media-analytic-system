@@ -1,4 +1,4 @@
-package snas.config;
+package smas.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,7 +17,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("snas.web")
+@ComponentScan("smas.web")
 public class WebConfig extends WebMvcConfigurerAdapter{
 
     /**

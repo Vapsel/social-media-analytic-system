@@ -5,16 +5,41 @@
     <title th:include="::#pageTitle">unnamed CMS</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" th:href="@{/public/vendor/bootstrap-3-3-6.min.css}">
-    <link rel="stylesheet" th:href="@{/css/main.css}">
-    <script th:src="@{/public/vendor/jquery-2-2-4.min.js}"></script>
-    <script th:src="@{/public/vendor/bootstrap-3-3-6.min.js}"></script>
+    <link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Vollkorn">
+
+    <link rel="stylesheet" th:href="@{/public/vendor/bootstrap-4-0-0-alpha-6.min.css}">
+    <link rel="stylesheet" th:href="@{/public/css/main.css}">
+    <link rel="stylesheet" th:href="@{/public/css/logo.css}">
+
+    <script th:src="@{/public/vendor/jquery-3-1-1.min.js}"></script>
+    <script th:src="@{/public/vendor/bootstrap4-0-0-alpha-6.min.js}"></script>
+
 </head>
 <body>
+
+<div th:fragment="header">
+    <nav class="navbar navbar-toggleable-sm navbar-light bg-faded fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <span class="navbar-brand" id="">sm<span id="a">a</span>s</span>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/">Home<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="/about">What is this</a>
+                <a class="nav-item nav-link" href="/contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+</div>
 
 </body>
 </html>

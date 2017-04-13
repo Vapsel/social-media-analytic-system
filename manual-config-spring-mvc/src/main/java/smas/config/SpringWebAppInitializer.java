@@ -1,4 +1,4 @@
-package snas.config;
+package smas.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

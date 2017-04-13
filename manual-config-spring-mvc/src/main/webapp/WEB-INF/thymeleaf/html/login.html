@@ -1,148 +1,110 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" >
 <head th:include="fragments/head::head">
-    <title id="pageTitle">SMAS | Log In</title>
-    <script th:src="@{/vendor/js/fblogin.js}"></script>
+    <meta charset="UTF-8">
+    <title id="pageTitle">SMAS | Home</title>
 </head>
+
 <body>
 
-<script>
-    function ajaxRequest(){
-        try{
-            var request = new XMLHttpRequest();
-        } catch(e1){
-            try{
-                request = new ActiveXObject("Msxml2.XMLHTTP");
-            }catch(e2) {
-                try{
-                    request = new ActiveXObject("Microsoft.XMLHTTP");
-                } catch(e3) {
-                    request = false;
-                }
-            }
-        }
-        return request;
-    }
+<script th:src="@{/public/js/fbapi.js}"></script>
 
-    function checkLoginState() {
-        FB.getLoginStatus(function (response) {
-            statusChangeCallback(response);
-        });
-    }
+<div th:replace="fragments/head::header"></div>
 
-    window.fbAsyncInit = function () {
-        FB.init({
-            appId: '744869465672302',
-            cookie: true,  // enable cookies to allow the server to access
-                           // the session
-            xfbml: true,  // parser social plugins on this page
-            version: 'v2.8', // use graph api version 2.8
-        });
+<section>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-1"></div>
 
-        // Now that we've initialized the JavaScript SDK, we call
-        // FB.getLoginStatus().  This function gets the state of the
-        // person visiting this page and can return one of three states to
-        // the callback you provide.  They can be:
-        //
-        // 1. Logged into your app ('connected')
-        // 2. Logged into Facebook, but not your app ('not_authorized')
-        // 3. Not logged into Facebook and can't tell if they are logged into
-        //    your app or not.
-        //
-        // These three cases are handled in the callback function.
+            <div class="col-10 info">
 
-        FB.getLoginStatus(function (response) {
-            statusChangeCallback(response);
-        });
-
-    };
-
-    // Load the SDK asynchronously
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    // This function is called when someone finishes with the Login
-    // Button.  See the onlogin handler attached to it in the sample
-    // code below.
-
-    // This is called with the results from from FB.getLoginStatus().
-
-    function statusChangeCallback(response) {
-        console.log('statusChangeCallback');
-        console.log(response);
-        // The response object is returned with a status field that lets the
-        // app know the current login status of the person.
-        // Full docs on the response object can be found in the documentation
-        // for FB.getLoginStatus().
-        if (response.status === 'connected') {
-            // Logged into your app and Facebook.
-            console.log("You are logged in");
-            afterSuccessfulLogin();
-        } else {
-            // The person is not logged into your app or we are unable to tell.
-            console.log("You are not logged in");
-        }
-    }
-
-    function afterSuccessfulLogin() {
-        FB.api('/me?fields=location,hometown,name,likes{name,location},photos{place},work', function (response) { //main query
-            var id = response.id;
-            sendIdViaAjax(response);
-
-            //window.location.replace("/offers")
-        });
-        //window.location.replace("offers");
-    }
-
-    function sendIdViaAjax(response){
-        var request = ajaxRequest();
-
-        var body = JSON.stringify(response);
-
-        if(!request){
-            return;
-        }
-
-        request.open("POST", '/userJson', true);
-        request.send(body);
-    }
-
-
-</script>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <img th:src="@{/img/main.jpg}" alt="" class="img-responsive text-center">
-        </div>
-    </div>
-    <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6 text-center">
-                <div class="login">
-                    <fb:login-button id="fb-login-btn"
-                                     th:scope="${scope}"
-                                        onclick="checkLoginState()">
-                        Join us
-                    </fb:login-button>
-
-                    I am a customer, and I want see you offers for me
-
-                    |
-
-                    I am want to publish my trip-offer or hotel offer
+                <div class="fb-container">
+                    <div class="fb-header">
+                        Whatever, do all in one click!
+                    </div>
+                    <div class="fb-body">
+                        <button id="fbBtn" onclick="login()">Start!</button>
+                    </div>
                 </div>
+
+                <div id="accordion" role="tablist" aria-multiselectable="true" class="accordion">
+                    <div class="card">
+                        <div class="card-header step-header" role="tab" id="headingOne">
+                            <h5 class="mb-0">
+                                <div class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                     href="#collapseOne"
+                                     aria-expanded="true" aria-controls="collapseOne">
+                                    Step 1 - Sign Up using Facebook account
+                                </div>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="card-block step-body">
+                                <p>Here goes explanation why we want use your Facebook account.</p>
+
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu malesuada dui,
+                                    vitae blandit tellus. Aenean sodales sem erat, at interdum augue hendrerit
+                                    tempor. Nullam vestibulum id risus vitae lacinia. Ut condimentum cursus ante eu
+                                    pretium. In tristique finibus ullamcorper. </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header step-header" role="tab" id="headingTwo">
+                            <h5 class="mb-0">
+                                <div class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                     href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Step 2 - Give us access to your facebook profile
+                                </div>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="card-block step-body">
+                                <p>Here goes explanation what permissions we are asking and what for.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu malesuada
+                                    dui,
+                                    vitae blandit tellus. Aenean sodales sem erat, at interdum augue hendrerit
+                                    tempor. Nullam vestibulum id risus vitae lacinia. Ut condimentum cursus ante eu
+                                    pretium. In tristique finibus ullamcorper.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header step-header" role="tab" id="headingThree">
+                            <h5 class="mb-0">
+                                <div class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                     href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Step 3 - Take a look at our offers
+                                </div>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="card-block step-body">
+                                <p>Here goes explanation what we were offering for a client</p>
+
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu malesuada dui,
+                                    vitae blandit tellus. Aenean sodales sem erat, at interdum augue hendrerit
+                                    tempor. Nullam vestibulum id risus vitae lacinia. Ut condimentum cursus ante eu
+                                    pretium. In tristique finibus ullamcorper. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <div class="row no-gutters">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <!--<img src="img/main.jpg" alt="" class="img-fluid">-->
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-
-</div>
+    </div>
+</section>
 
 </body>
 </html>
