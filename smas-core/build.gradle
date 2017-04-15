@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'application'
+
+// TODO
+// Workaround to run 'build' task with this project as pipeline
+mainClassName = 'smas.config.SpringWebAppInitializer'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+jar{
+    version = '1.0.0'
+}
+
+dependencies {
+//    TODO create property variable
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.7.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context', version: '4.3.7.RELEASE'
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
+    compile group: 'org.springframework', name: 'spring-orm', version: '4.3.7.RELEASE'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.9.Final'
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '1.11.1.RELEASE'
+
+
+
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.6'
+}
+

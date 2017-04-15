@@ -1,2 +1,3 @@
+include 'smas-core'
 include 'manual-config-spring-mvc'
 include 'solver'
