@@ -4,8 +4,8 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor;
@@ -14,7 +14,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 public class DataSourceConfig {
 
@@ -22,18 +21,22 @@ public class DataSourceConfig {
      * Pooled data source using Apache Commons DBCP 2
      * @return Data source bean
      */
-    @Profile("development")
     @Bean
     public DataSource dataSource(){
         // TODO move to properties file
         BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("org.h2.Driver");
-        ds.setUrl("jdbc:h2:tcp://localhost:5432/smas");
+        ds.setDriverClassName("org.postgresql.Driver");
+        ds.setUrl("jdbc:postgresql://localhost:5432/smas?useUnicode=yes&amp;characterEncoding=UTF-8");
         ds.setUsername("postgres");
         ds.setPassword("pswmb$@FE1");
-        // TODO What does it mean?
-        ds.setInitialSize(5);
         return ds;
+    }
+
+    @Bean
+    public JpaTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory){
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
+        return transactionManager;
     }
 
     /**
@@ -64,6 +67,7 @@ public class DataSourceConfig {
         adapter.setShowSql(true);
         adapter.setGenerateDdl(false);
         adapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQL95Dialect");
+        adapter.setGenerateDdl(true);
         return adapter;
     }
 
@@ -81,7 +85,7 @@ public class DataSourceConfig {
      * @return Bean
      */
     @Bean
-    public BeanPostProcessor persistanceTranslation(){
+    public BeanPostProcessor persistenceTranslation(){
         return  new PersistenceExceptionTranslationPostProcessor();
     }
 }
