@@ -49,6 +49,6 @@ public class HomeController {
         IntelligentNodeData node = new IntelligentNodeData();
         node.setNotion(text);
         graphService.save(node);
-        response.sendRedirect("/login");
+        response.sendRedirect("/");
     }
 }

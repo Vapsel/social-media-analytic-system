@@ -4,7 +4,10 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -14,21 +17,37 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
 
+/**
+ * Defines packages to scan with {@link org.springframework.data.repository.Repository} annotation
+ */
 @Configuration
+@EnableJpaRepositories(basePackages = DataSourceConfig.PACKAGE_TO_SCAN_REPOSITORIES)
+@PropertySource("classpath:application.properties")
 public class DataSourceConfig {
+
+    static final String PACKAGE_TO_SCAN_REPOSITORIES = "smas.core.database.repository";
+    private static final String PACKAGE_TO_SCAN_ENTITIES = "smas.core.database.domain";
+
+    private static final String PROPERTY_DATASOURCE_DRIVER_CLASS_NAME = "datasource.driver-class-name";
+    private static final String PROPERTY_DATASOURCE_URL = "datasource.url";
+    private static final String PROPERTY_DATASOURCE_USERNAME = "datasource.username";
+    private static final String PROPERTY_DATASOURCE_PASSWORD = "datasource.password";
+
+    private static final String PROPERTY_JPA_DATABASE_PLATFORM = "jpa.database-platform";
+    private static final String PROPERTY_JPA_SHOW_SQL = "jpa.show-sql";
+    private static final String PROPERTY_JPA_GENERATE_DDL = "jpa.generate-ddl";
 
     /**
      * Pooled data source using Apache Commons DBCP 2
      * @return Data source bean
      */
     @Bean
-    public DataSource dataSource(){
-        // TODO move to properties file
+    public DataSource dataSource(Environment env){
         BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("org.postgresql.Driver");
-        ds.setUrl("jdbc:postgresql://localhost:5432/smas?useUnicode=yes&amp;characterEncoding=UTF-8");
-        ds.setUsername("postgres");
-        ds.setPassword("pswmb$@FE1");
+        ds.setDriverClassName(env.getRequiredProperty(PROPERTY_DATASOURCE_DRIVER_CLASS_NAME));
+        ds.setUrl(env.getRequiredProperty(PROPERTY_DATASOURCE_URL));
+        ds.setUsername(env.getRequiredProperty(PROPERTY_DATASOURCE_USERNAME));
+        ds.setPassword(env.getRequiredProperty(PROPERTY_DATASOURCE_PASSWORD));
         return ds;
     }
 
@@ -51,7 +70,7 @@ public class DataSourceConfig {
         LocalContainerEntityManagerFactoryBean emfb = new LocalContainerEntityManagerFactoryBean();
         emfb.setDataSource(dataSource);
         emfb.setJpaVendorAdapter(jpaVendorAdapter);
-        emfb.setPackagesToScan("smas.core.database.domain");
+        emfb.setPackagesToScan(PACKAGE_TO_SCAN_ENTITIES);
         return emfb;
     }
 
@@ -60,14 +79,12 @@ public class DataSourceConfig {
      * @return JPA vendor adapter
      */
     @Bean
-    public JpaVendorAdapter jpaVendorAdapter(){
+    public JpaVendorAdapter jpaVendorAdapter(Environment env){
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
         adapter.setDatabase(Database.POSTGRESQL);
-        // TODO What does it mean?
-        adapter.setShowSql(true);
-        adapter.setGenerateDdl(false);
-        adapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQL95Dialect");
-        adapter.setGenerateDdl(true);
+        adapter.setShowSql(Boolean.parseBoolean(env.getProperty(PROPERTY_JPA_SHOW_SQL)));
+        adapter.setDatabasePlatform(env.getProperty(PROPERTY_JPA_DATABASE_PLATFORM));
+        adapter.setGenerateDdl(Boolean.parseBoolean(env.getProperty(PROPERTY_JPA_GENERATE_DDL)));
         return adapter;
     }
 
