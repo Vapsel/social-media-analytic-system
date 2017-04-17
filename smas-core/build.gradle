@@ -1,0 +1,18 @@
+mainClassName = 'smas.core.database.config.DataSourceConfig'
+
+jar{
+    version = '0.0.1'
+}
+
+dependencies {
+    // Begin Spring Data JPA
+        compile group: 'org.springframework', name: 'spring-jdbc', version: "${springVersion}"
+        compile group: 'org.springframework', name: 'spring-context', version: "${springVersion}"
+        compile group: 'org.springframework', name: 'spring-orm', version: "${springVersion}"
+        compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
+        compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.9.Final'
+        compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '1.11.1.RELEASE'
+        compile group: 'org.postgresql', name: 'postgresql', version: '42.0.0'
+    // End Spring Data JPA
+}
+
