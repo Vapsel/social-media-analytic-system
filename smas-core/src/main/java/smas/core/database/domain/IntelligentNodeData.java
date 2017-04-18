@@ -17,7 +17,10 @@ public class IntelligentNodeData {
 
     private String notion;
 
-    @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<IntelligentNodeData> relatedNodes;
+    @ElementCollection(targetClass = Long.class)
+    private List<Long> categoryIds;
+
+    @ElementCollection(targetClass = Long.class)
+    private List<Long> relatedNodesIds;
 
 }

@@ -16,6 +16,8 @@ dependencies {
 
     compile group: 'com.restfb', name: 'restfb', version: '2.0.0-rc.1'
 
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.8'
+
     compile project(':smas-core')
 }
 
