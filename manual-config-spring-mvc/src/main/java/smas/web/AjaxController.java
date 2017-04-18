@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+
 @RestController
 public class AjaxController {
 
@@ -56,39 +58,27 @@ public class AjaxController {
         System.out.print(info.toString());
     }
 
-    @RequestMapping(value = "/getCategories", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-     public String categories(){
-        return "[\n" +
-                "      {name: 'Hydrogen', symbol: 'H', number: 1},\n" +
-                "      {name: 'Helium', symbol: 'He', number: 2},\n" +
-                "      {name: 'Lithium', symbol: 'Li', number: 3},\n" +
-                "      {name: 'Beryllium', symbol: 'Be', number: 4},\n" +
-                "      {name: 'Boron', symbol: 'B', number: 5},\n" +
-                "      {name: 'Carbon', symbol: 'C', number: 6},\n" +
-                "      {name: 'Nitrogen', symbol: 'N', number: 7},\n" +
-                "      {name: 'Oxygen', symbol: 'O', number: 8},\n" +
-                "      {name: 'Fluorine', symbol: 'F', number: 9},\n" +
-                "      {name: 'Neon', symbol: 'Ne', number: 10},\n" +
-                "      {name: 'Sodium', symbol: 'Na', number: 11}\n" +
-                "]";
-    }
+    @RequestMapping(value = "/getCategories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+     public ResponseEntity<?> categories(){
+        @Getter
+        @Setter
+        @AllArgsConstructor
+        class A{
+            private String name;
+            private String symbol;
+            private Long number;
+        }
 
-/*    @RequestMapping(value = "/getRelations", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-     public String relations(){
-        return "[\n" +
-                "      {name: 'Hydrogen', symbol: 'H', number: 1},\n" +
-                "      {name: 'Helium', symbol: 'He', number: 2},\n" +
-                "      {name: 'Lithium', symbol: 'Li', number: 3},\n" +
-                "      {name: 'Beryllium', symbol: 'Be', number: 4},\n" +
-                "      {name: 'Boron', symbol: 'B', number: 5},\n" +
-                "      {name: 'Carbon', symbol: 'C', number: 6},\n" +
-                "      {name: 'Nitrogen', symbol: 'N', number: 7},\n" +
-                "      {name: 'Oxygen', symbol: 'O', number: 8},\n" +
-                "      {name: 'Fluorine', symbol: 'F', number: 9},\n" +
-                "      {name: 'Neon', symbol: 'Ne', number: 10},\n" +
-                "      {name: 'Sodium', symbol: 'Na', number: 11}\n" +
-                "]";
-    }*/
+        ArrayList<A> list = new ArrayList<>();
+        list.add(new A("Category1", "Category1", (long) 1));
+        list.add(new A("Category2", "Category2", (long) 2));
+        list.add(new A("Category3", "Category3", (long) 3));
+        list.add(new A("Category4", "Category4", (long) 4));
+        list.add(new A("Category5", "Category5", (long) 5));
+        list.add(new A("Category6", "Category6", (long) 6));
+
+        return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/getRelations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> relations(){
@@ -100,21 +90,16 @@ public class AjaxController {
             private String symbol;
             private Long number;
         }
-        return new ResponseEntity<>(new A("Hydrogen", "H", (long) 1), HttpStatus.OK);
 
-        /*return "[\n" +
-                "      {name: 'Hydrogen', symbol: 'H', number: 1},\n" +
-                "      {name: 'Helium', symbol: 'He', number: 2},\n" +
-                "      {name: 'Lithium', symbol: 'Li', number: 3},\n" +
-                "      {name: 'Beryllium', symbol: 'Be', number: 4},\n" +
-                "      {name: 'Boron', symbol: 'B', number: 5},\n" +
-                "      {name: 'Carbon', symbol: 'C', number: 6},\n" +
-                "      {name: 'Nitrogen', symbol: 'N', number: 7},\n" +
-                "      {name: 'Oxygen', symbol: 'O', number: 8},\n" +
-                "      {name: 'Fluorine', symbol: 'F', number: 9},\n" +
-                "      {name: 'Neon', symbol: 'Ne', number: 10},\n" +
-                "      {name: 'Sodium', symbol: 'Na', number: 11}\n" +
-                "]";*/
+        ArrayList<A> list = new ArrayList<>();
+        list.add(new A("Relation1", "Relation1", (long) 1));
+        list.add(new A("Relation2", "Relation2", (long) 2));
+        list.add(new A("Relation3", "Relation3", (long) 3));
+        list.add(new A("Relation4", "Relation4", (long) 4));
+        list.add(new A("Relation5", "Relation5", (long) 5));
+        list.add(new A("Relation6", "Relation6", (long) 6));
+
+        return new ResponseEntity<Object>(list.toArray(), HttpStatus.OK);
     }
 
 }

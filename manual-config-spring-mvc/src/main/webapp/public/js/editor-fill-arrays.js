@@ -17,9 +17,8 @@ function getAjaxRequest() {
 
 function fillCategories() {
     var box = document.querySelector('#categories');
-    //TODO : ajax request-response for categories
-    //getAjaxResponseForUrl("/getCategories", box.items);
 
+    getAjaxResponseForUrl("/getCategories", box);
     box.addEventListener("value-changed", function (item) {
         var values = document.querySelector("#selected-category");
         createSelectedOption(item.detail.value, values);
@@ -30,9 +29,7 @@ function fillCategories() {
 function fillRelations() {
     var box = document.querySelector('#relations');
 
-    //TODO : ajax request-response for relations
-    getAjaxResponseForUrl("/getRelations", box.items);
-
+    getAjaxResponseForUrl("/getRelations", box);
     box.addEventListener("value-changed", function (item) {
         var values = document.querySelector("#selected-relations");
         createSelectedOption(item.detail.value, values);
@@ -45,13 +42,7 @@ function getAjaxResponseForUrl(url, form) {
 
     request.onreadystatechange = function () {
         if (request.readyState == 3 && request.status == 200) {
-            form = JSON.parse(request.responseText);
-        }
-
-        if (request.readyState == 4) {
-            request.open("GET", url, true);
-            request.send();
-            setTimeout(function(){}, 1000000);
+            form.items = JSON.parse(request.response);
         }
     };
 

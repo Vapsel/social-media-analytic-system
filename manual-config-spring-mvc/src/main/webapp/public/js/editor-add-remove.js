@@ -6,13 +6,8 @@ function btnAddAction(){
     var categories = document.querySelector("#selected-category").innerHTML;
     var relations = document.querySelector("#selected-relations").innerHTML;
 
-    var summary = {
-        key: text,
-        categories: categories,
-        relations: relations
-    };
-
-    console.log(summary);
+    //TODO make summary of the form
+    //TODO send summary via ajax
 }
 
 var counter = 0;
@@ -21,7 +16,6 @@ var relations = new Set();
 
 function createSelectedOption(name, parent) {
     name = name.trim();
-    console.log(name);
     if (name == null || name == "" || name == undefined) {
         return;
     }
@@ -50,7 +44,6 @@ function createSelectedOption(name, parent) {
 }
 
 function deleteSelectedOption(nb, parentId) {
-    console.log(parentId);
     var text = document.querySelector("#option-text-" + nb).innerHTML;
     text = text.trim();
 
