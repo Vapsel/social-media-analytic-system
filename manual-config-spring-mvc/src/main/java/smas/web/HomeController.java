@@ -16,6 +16,7 @@ import java.io.IOException;
 @RequestMapping("/")
 public class HomeController {
 
+    public static final String EDITOR_TEMPLATE = "html/editor";
     @Autowired
     private GraphService graphService;
 
@@ -50,5 +51,10 @@ public class HomeController {
         node.setNotion(text);
         graphService.save(node);
         response.sendRedirect("/");
+    }
+
+    @RequestMapping(value = "/editor")
+    public String editor(){
+        return EDITOR_TEMPLATE;
     }
 }

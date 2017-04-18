@@ -4,6 +4,9 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.JsonMapper;
 import com.restfb.types.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +54,67 @@ public class AjaxController {
         info.append("Likes").append(splitter).append(user.getLikes()).append("\n");
 
         System.out.print(info.toString());
+    }
+
+    @RequestMapping(value = "/getCategories", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+     public String categories(){
+        return "[\n" +
+                "      {name: 'Hydrogen', symbol: 'H', number: 1},\n" +
+                "      {name: 'Helium', symbol: 'He', number: 2},\n" +
+                "      {name: 'Lithium', symbol: 'Li', number: 3},\n" +
+                "      {name: 'Beryllium', symbol: 'Be', number: 4},\n" +
+                "      {name: 'Boron', symbol: 'B', number: 5},\n" +
+                "      {name: 'Carbon', symbol: 'C', number: 6},\n" +
+                "      {name: 'Nitrogen', symbol: 'N', number: 7},\n" +
+                "      {name: 'Oxygen', symbol: 'O', number: 8},\n" +
+                "      {name: 'Fluorine', symbol: 'F', number: 9},\n" +
+                "      {name: 'Neon', symbol: 'Ne', number: 10},\n" +
+                "      {name: 'Sodium', symbol: 'Na', number: 11}\n" +
+                "]";
+    }
+
+/*    @RequestMapping(value = "/getRelations", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+     public String relations(){
+        return "[\n" +
+                "      {name: 'Hydrogen', symbol: 'H', number: 1},\n" +
+                "      {name: 'Helium', symbol: 'He', number: 2},\n" +
+                "      {name: 'Lithium', symbol: 'Li', number: 3},\n" +
+                "      {name: 'Beryllium', symbol: 'Be', number: 4},\n" +
+                "      {name: 'Boron', symbol: 'B', number: 5},\n" +
+                "      {name: 'Carbon', symbol: 'C', number: 6},\n" +
+                "      {name: 'Nitrogen', symbol: 'N', number: 7},\n" +
+                "      {name: 'Oxygen', symbol: 'O', number: 8},\n" +
+                "      {name: 'Fluorine', symbol: 'F', number: 9},\n" +
+                "      {name: 'Neon', symbol: 'Ne', number: 10},\n" +
+                "      {name: 'Sodium', symbol: 'Na', number: 11}\n" +
+                "]";
+    }*/
+
+    @RequestMapping(value = "/getRelations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> relations(){
+        @Getter
+        @Setter
+        @AllArgsConstructor
+        class A{
+            private String name;
+            private String symbol;
+            private Long number;
+        }
+        return new ResponseEntity<>(new A("Hydrogen", "H", (long) 1), HttpStatus.OK);
+
+        /*return "[\n" +
+                "      {name: 'Hydrogen', symbol: 'H', number: 1},\n" +
+                "      {name: 'Helium', symbol: 'He', number: 2},\n" +
+                "      {name: 'Lithium', symbol: 'Li', number: 3},\n" +
+                "      {name: 'Beryllium', symbol: 'Be', number: 4},\n" +
+                "      {name: 'Boron', symbol: 'B', number: 5},\n" +
+                "      {name: 'Carbon', symbol: 'C', number: 6},\n" +
+                "      {name: 'Nitrogen', symbol: 'N', number: 7},\n" +
+                "      {name: 'Oxygen', symbol: 'O', number: 8},\n" +
+                "      {name: 'Fluorine', symbol: 'F', number: 9},\n" +
+                "      {name: 'Neon', symbol: 'Ne', number: 10},\n" +
+                "      {name: 'Sodium', symbol: 'Na', number: 11}\n" +
+                "]";*/
     }
 
 }
