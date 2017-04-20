@@ -32,4 +32,16 @@ public class GraphServiceImpl implements GraphService{
     public List<CategoryData> findAllCategories() {
         return graphRepository.findAllCategories();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<IntelligentNodeData> findNodesWithNotion(String searchText) {
+        List<IntelligentNodeData> result = graphRepository.findNodesStartNotion(searchText);
+        if (result.isEmpty()){
+            return graphRepository.findNodesContainNotion(searchText);
+        }
+        return result;
+    }
 }
