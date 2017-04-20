@@ -14,6 +14,5 @@ public class CategoryData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @UniqueConstraint()
     private String name;
 }
