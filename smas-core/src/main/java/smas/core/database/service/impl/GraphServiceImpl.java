@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import smas.core.database.domain.CategoryData;
 import smas.core.database.domain.IntelligentNodeData;
-import smas.core.database.repository.GraphRepository;
+import smas.core.database.repository.CategoryRepository;
+import smas.core.database.repository.NodeRepository;
 import smas.core.database.service.interfaces.GraphService;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -15,14 +17,27 @@ import java.util.List;
 public class GraphServiceImpl implements GraphService{
 
     @Autowired
-    private GraphRepository graphRepository;
+    private NodeRepository nodeRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void save(IntelligentNodeData node) {
-        graphRepository.save(node);
+        nodeRepository.save(node);
+    }
+
+    @Override
+    public void save(CategoryData category) {
+        categoryRepository.save(category);
+    }
+
+    @Override
+    public void save(IntelligentNodeData node, Collection<String> newCategories) {
+
     }
 
     /**
@@ -30,7 +45,7 @@ public class GraphServiceImpl implements GraphService{
      */
     @Override
     public List<CategoryData> findAllCategories() {
-        return graphRepository.findAllCategories();
+        return nodeRepository.findAllCategories();
     }
 
     /**
@@ -38,9 +53,9 @@ public class GraphServiceImpl implements GraphService{
      */
     @Override
     public List<IntelligentNodeData> findNodesWithNotion(String searchText) {
-        List<IntelligentNodeData> result = graphRepository.findNodesStartNotion(searchText);
+        List<IntelligentNodeData> result = nodeRepository.findNodesStartNotion(searchText);
         if (result.isEmpty()){
-            return graphRepository.findNodesContainNotion(searchText);
+            return nodeRepository.findNodesContainNotion(searchText);
         }
         return result;
     }

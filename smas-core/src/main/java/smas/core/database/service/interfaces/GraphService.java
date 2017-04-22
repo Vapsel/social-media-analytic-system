@@ -3,6 +3,7 @@ package smas.core.database.service.interfaces;
 import smas.core.database.domain.CategoryData;
 import smas.core.database.domain.IntelligentNodeData;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface GraphService {
@@ -16,6 +17,14 @@ public interface GraphService {
      * @param node Node to persists
      */
     void save(IntelligentNodeData node);
+
+    // save only category
+    void save(CategoryData category);
+
+    // save node with new categories
+    @Deprecated
+    // TODO
+    void save(IntelligentNodeData node, Collection<String> newCategories);
 
     /**
      * Find all available categories (used and unused).
@@ -31,4 +40,6 @@ public interface GraphService {
      * @return Nodes that satisfy query from first or second step.
      */
     List<IntelligentNodeData> findNodesWithNotion(String searchText);
+
+
 }
