@@ -24,9 +24,9 @@ public interface GraphService {
     List<CategoryData> findAllCategories();
 
     /**
-     * Search nodes that have notion like <code>searchText</code>.
-     * First, try to find node's notion that start with <code>searchText</code>.
-     * If there isn't any nodes from first step then find node's notion that contains <code>searchText</code>.
+     * Search nodes that have name like <code>searchText</code>.
+     * First, try to find node's name that start with <code>searchText</code>.
+     * If there isn't any nodes from first step then find node's name that contains <code>searchText</code>.
      * @param searchText Query text
      * @return Nodes that satisfy query from first or second step.
      */

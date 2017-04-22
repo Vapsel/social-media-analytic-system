@@ -14,7 +14,8 @@ var counter = 0;
 var categories = new Set();
 var relations = new Set();
 
-function createSelectedOption(name, parent) {
+function createSelectedOption(item, parent) {
+    var name = item.label;
     name = name.trim();
     if (name == null || name == "" || name == undefined) {
         return;

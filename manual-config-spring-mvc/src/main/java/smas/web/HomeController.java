@@ -48,7 +48,7 @@ public class HomeController {
     public void testDatabase(HttpServletResponse response,
                              @RequestParam("text") String text) throws IOException {
         IntelligentNodeData node = new IntelligentNodeData();
-        node.setNotion(text);
+        node.setName(text);
         graphService.save(node);
         response.sendRedirect("/");
     }
