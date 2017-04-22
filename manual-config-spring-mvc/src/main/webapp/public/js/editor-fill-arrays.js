@@ -20,9 +20,14 @@ function fillCategories() {
     box.loading = true;
 
     getAjaxResponseForUrl("/getCategories", box);
-    box.addEventListener("selected-item-changed", function () {
+    box.addEventListener("value-changed", function (item) {
         var values = document.querySelector("#selected-category");
-        createSelectedOption(box.selectedItem, values);
+        if(box.selectedItem){
+            createSelectedOption(box.selectedItem, values);
+        }else{
+            var newItem = {label: item.detail.value};
+            createSelectedOption(newItem, values);
+        }
         box.value = "";
     })
 }
@@ -43,6 +48,7 @@ function fillRelations() {
         var values = document.querySelector("#selected-relations");
         createSelectedOption(box.selectedItem, values);
         box.value = "";
+        box.cancel();
     })
 
 }

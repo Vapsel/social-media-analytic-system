@@ -1,18 +1,31 @@
-function btnAddAction(){
-    var text = document.querySelector("#keyForm").value;
-    if(text.trim() === ""){
-        return;
-    }
-    var categories = document.querySelector("#selected-category").innerHTML;
-    var relations = document.querySelector("#selected-relations").innerHTML;
-
-    //TODO make summary of the form
-    //TODO send summary via ajax
-}
-
 var counter = 0;
 var categories = new Set();
 var relations = new Set();
+
+function getRelationArray() {
+    var array = [];
+    relations.forEach(function(entry){
+        array.push(entry);
+    });
+    return array;
+}
+function btnAddAction() {
+    var key = document.querySelector("#keyForm").value;
+
+    var newCategories = [], existingCategories = [];
+    setCategories(newCategories, existingCategories);
+
+    var relationsArray = getRelationArray();
+
+    var summary = {
+        key: key,
+        relations: relationsArray,
+        existingCategories: existingCategories,
+        newCategories: newCategories
+    };
+
+    sendSummaryViaAjax(summary);
+}
 
 function createSelectedOption(item, parent) {
     var name = item.label;
@@ -31,14 +44,14 @@ function createSelectedOption(item, parent) {
         return;
     }
 
-    if (! set.has(name)) {
+    if (!set.has(item)) {
         ++counter;
         var htmlTemplate = "\<div class=\"option\" id=\"option-" + counter + "\"\>" +
             "\<span class=\"option-name\" id=\"option-text-" + counter + "\"\>" + name + "\</span>" +
             "\<img src=\"public/img/close-small.png\" class=\"option-close-image\" onclick=\"deleteSelectedOption("+ counter + "," + "\'" + parent.id.trim() + "\'" + ")\"\>" +
             "\</div>";
 
-        set.add(name);
+        set.add(item);
 
         parent.innerHTML += htmlTemplate;
     }
@@ -58,7 +71,48 @@ function deleteSelectedOption(nb, parentId) {
         return;
     }
 
-    set.delete(text);
+    set.forEach(function(entry){
+        if(entry.label === text){
+            set.delete(entry);
+        }
+    });
 
     document.querySelector("#option-" + nb).remove();
+}
+
+function setCategories(newCategories, existingCategories) {
+    categories.forEach(function (entry) {
+       if(entry.value){
+            existingCategories.push(entry);
+       }else{
+           newCategories.push(entry);
+       }
+    });
+}
+
+function getAjaxRequest() {
+    try {
+        var request = new XMLHttpRequest();
+    } catch (e1) {
+        try {
+            request = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e2) {
+            try {
+                request = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e3) {
+                request = false;
+            }
+        }
+    }
+    return request;
+}
+
+function sendSummaryViaAjax(summary){
+    var body = JSON.stringify(summary);
+    var request = getAjaxRequest();
+
+    request.open("POST", "/editor", true);
+    request.send(body);
+
+    location.reload();
 }

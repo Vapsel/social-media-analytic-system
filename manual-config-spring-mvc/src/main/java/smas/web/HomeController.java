@@ -53,7 +53,7 @@ public class HomeController {
         response.sendRedirect("/");
     }
 
-    @RequestMapping(value = "/editor")
+    @RequestMapping(value = "/editor", method = RequestMethod.GET)
     public String editor(){
         return EDITOR_TEMPLATE;
     }
