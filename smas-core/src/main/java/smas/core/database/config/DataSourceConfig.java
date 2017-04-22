@@ -30,8 +30,8 @@ public class DataSourceConfig {
 
     private static final String PROPERTY_DATASOURCE_DRIVER_CLASS_NAME = "datasource.driver-class-name";
     private static final String PROPERTY_DATASOURCE_URL = "datasource.url";
-    private static final String PROPERTY_DATASOURCE_USERNAME = "datasource.username";
-    private static final String PROPERTY_DATASOURCE_PASSWORD = "datasource.password";
+    private static final String PROPERTY_DATASOURCE_USERNAME = "datasource.username.system.variable";
+    private static final String PROPERTY_DATASOURCE_PASSWORD = "datasource.password.system.variable";
 
     private static final String PROPERTY_JPA_DATABASE_PLATFORM = "jpa.database-platform";
     private static final String PROPERTY_JPA_SHOW_SQL = "jpa.show-sql";
@@ -46,8 +46,8 @@ public class DataSourceConfig {
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName(env.getRequiredProperty(PROPERTY_DATASOURCE_DRIVER_CLASS_NAME));
         ds.setUrl(env.getRequiredProperty(PROPERTY_DATASOURCE_URL));
-        ds.setUsername(env.getRequiredProperty(PROPERTY_DATASOURCE_USERNAME));
-        ds.setPassword(env.getRequiredProperty(PROPERTY_DATASOURCE_PASSWORD));
+        ds.setUsername(env.getRequiredProperty(env.getRequiredProperty(PROPERTY_DATASOURCE_USERNAME)));
+        ds.setPassword(env.getRequiredProperty(env.getRequiredProperty(PROPERTY_DATASOURCE_PASSWORD)));
         return ds;
     }
 
