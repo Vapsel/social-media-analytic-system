@@ -9,7 +9,7 @@ import smas.core.database.domain.IntelligentNodeData;
 import java.util.List;
 
 @Repository
-public interface GraphRepository extends JpaRepository<IntelligentNodeData, Long>{
+public interface NodeRepository extends JpaRepository<IntelligentNodeData, Long>{
 
     @Query("SELECT c FROM CategoryData c")
     List<CategoryData> findAllCategories();
