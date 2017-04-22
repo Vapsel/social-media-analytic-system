@@ -11,6 +11,8 @@ import smas.core.database.service.interfaces.GraphService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -37,7 +39,11 @@ public class GraphServiceImpl implements GraphService{
 
     @Override
     public void save(IntelligentNodeData node, Collection<String> newCategories) {
-
+        Set<Long> categoryIds = newCategories.stream()
+                .map(s -> categoryRepository.saveAndFlush(new CategoryData(s)).getId())
+                .collect(Collectors.toSet());
+        node.setCategoryIds(categoryIds);
+        save(node);
     }
 
     /**

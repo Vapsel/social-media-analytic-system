@@ -14,16 +14,28 @@ public interface GraphService {
      *     If node already has id, it will be updated.
      *     If node doesn't have id, new entity will be created.
      * </p>
-     * @param node Node to persists
+     * @param node Node to persist
      */
     void save(IntelligentNodeData node);
 
-    // save only category
+    /**
+     * Persists category in database.
+     * <p>
+     *     If category already has id, it will be updated.
+     *     If category doesn't have id, new entity will be created.
+     * </p>
+     * @param category Category to persist
+     */
     void save(CategoryData category);
 
-    // save node with new categories
-    @Deprecated
-    // TODO
+    /**
+     * Persists node with new categories.
+     * New categories will be persist in database and added to to <code>node</code>.
+     * @param node Node to persist
+     * @param newCategories New categories
+     * @see GraphService#save(IntelligentNodeData)
+     * @see GraphService#save(CategoryData)
+     */
     void save(IntelligentNodeData node, Collection<String> newCategories);
 
     /**
