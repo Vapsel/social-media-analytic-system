@@ -7,6 +7,4 @@ import smas.core.database.domain.CategoryData;
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryData, Long> {
 
-
-
 }

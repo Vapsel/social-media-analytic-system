@@ -32,11 +32,17 @@ public class GraphServiceImpl implements GraphService{
         nodeRepository.save(node);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void save(CategoryData category) {
         categoryRepository.save(category);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void save(IntelligentNodeData node, Collection<String> newCategories) {
         Set<Long> categoryIds = newCategories.stream()

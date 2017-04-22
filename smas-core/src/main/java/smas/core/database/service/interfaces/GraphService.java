@@ -52,6 +52,4 @@ public interface GraphService {
      * @return Nodes that satisfy query from first or second step.
      */
     List<IntelligentNodeData> findNodesWithNotion(String searchText);
-
-
 }
