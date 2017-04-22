@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -17,10 +17,10 @@ public class IntelligentNodeData {
 
     private String notion;
 
-    @ElementCollection(targetClass = Long.class)
-    private List<Long> categoryIds;
+    @ElementCollection(targetClass = Long.class, fetch = FetchType.EAGER)
+    private Set<Long> categoryIds;
 
-    @ElementCollection(targetClass = Long.class)
-    private List<Long> relatedNodesIds;
+    @ElementCollection(targetClass = Long.class, fetch = FetchType.EAGER)
+    private Set<Long> relatedNodesIds;
 
 }
