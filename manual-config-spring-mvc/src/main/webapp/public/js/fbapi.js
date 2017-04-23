@@ -68,11 +68,11 @@ function login(){
     FB.login(function (loginResponse) {
         if (loginResponse.authResponse) {
             console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me?fields=location,hometown,name,likes{name,location},photos{place},work', function (jsonResponse) {
+            FB.api('/me?fields=location,hometown,name,likes{name,location},photos{place},work,posts', function (jsonResponse) {
                 sendJsonViaAjax(jsonResponse)
             });
         } else {
             console.log('User cancelled login or did not fully authorize.');
         }
-    }, {scope: 'user_hometown, user_location, user_about_me, email, public_profile'});
+    }, {scope: 'user_likes, user_photos, user_about_me, user_posts, public_profile'});
 }

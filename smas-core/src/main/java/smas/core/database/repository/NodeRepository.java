@@ -1,5 +1,7 @@
 package smas.core.database.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -27,7 +29,10 @@ public interface NodeRepository extends JpaRepository<IntelligentNodeData, Long>
      * @param searchText Text that will be search
      * @return List of nodes that match restriction
      */
-    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.notion) like lower(concat('%', ?1, '%'))")
+    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.notion) LIKE lower(concat('%', ?1, '%'))")
     List<IntelligentNodeData> findNodesContainNotion(String searchText);
+
+    @Query("SELECT n FROM IntelligentNodeData n WHERE ?1 LIKE concat('%', n.notion, '%')")
+    Page<IntelligentNodeData> findNodeByNotion(String searchText, Pageable pageable);
 
 }

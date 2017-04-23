@@ -16,6 +16,10 @@ dependencies {
 
     compile group: 'com.restfb', name: 'restfb', version: '2.0.0-rc.1'
 
+    // https://mvnrepository.com/artifact/org.facebook4j/facebook4j-core
+    compile group: 'org.facebook4j', name: 'facebook4j-core', version: '2.4.9'
+
+
     compile project(':smas-core')
 }
 
