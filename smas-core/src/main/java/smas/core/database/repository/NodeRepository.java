@@ -21,7 +21,7 @@ public interface NodeRepository extends JpaRepository<IntelligentNodeData, Long>
      * @param searchText Started text that will be search
      * @return List of nodes that match restriction
      */
-    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.notion) like lower(concat(?1, '%'))")
+    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.name) like lower(concat(?1, '%'))")
     List<IntelligentNodeData> findNodesStartNotion(String searchText);
 
     /**
@@ -29,10 +29,10 @@ public interface NodeRepository extends JpaRepository<IntelligentNodeData, Long>
      * @param searchText Text that will be search
      * @return List of nodes that match restriction
      */
-    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.notion) LIKE lower(concat('%', ?1, '%'))")
+    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.name) LIKE lower(concat('%', ?1, '%'))")
     List<IntelligentNodeData> findNodesContainNotion(String searchText);
 
-    @Query("SELECT n FROM IntelligentNodeData n WHERE ?1 LIKE concat('%', n.notion, '%')")
+    @Query("SELECT n FROM IntelligentNodeData n WHERE ?1 LIKE concat('%', n.name, '%')")
     Page<IntelligentNodeData> findNodeByNotion(String searchText, Pageable pageable);
 
 }

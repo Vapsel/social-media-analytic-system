@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import smas.analysis.AnalysisProcessing;
-import smas.core.database.service.interfaces.GraphService;
-
-import java.util.List;
 import smas.core.database.domain.CategoryData;
 import smas.core.database.domain.IntelligentNodeData;
 import smas.core.database.service.interfaces.GraphService;
@@ -44,18 +41,18 @@ public class AjaxController {
 //        printUserInfo(user);
 
 
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(sortedPreferences.toArray(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getCategories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> categories(){
-        List<CategoryData> list = service.findAllCategories();
+        List<CategoryData> list = graphService.findAllCategories();
         return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getRelations", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> relations(@RequestBody String searchText){
-        List<IntelligentNodeData> list = service.findNodesWithNotion(searchText);
+        List<IntelligentNodeData> list = graphService.findNodesWithNotion(searchText);
         return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
     }
 
@@ -79,15 +76,15 @@ public class AjaxController {
             node.setRelatedNodesIds(relationsIds);
 
             if (newCategoriesNames.size() == 0) {
-                service.save(node);
+                graphService.save(node);
             } else {
-                service.save(node, newCategoriesNames);
+                graphService.save(node, newCategoriesNames);
             }
         }else{
             for(String categoryName : newCategoriesNames){
                 CategoryData category = new CategoryData();
                 category.setName(categoryName);
-                service.save(category);
+                graphService.save(category);
                 //maybe better to create save method which get a Set of categories as a parametr
             }
         }

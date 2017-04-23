@@ -62,6 +62,13 @@ function sendJsonViaAjax(response) {
     var fbJson = JSON.stringify(response);
     request.open("POST", '/userJson', true);
     request.send(fbJson);
+    request.onreadystatechange = function () {
+        if (request.readyState == 3 && request.status == 200) {
+            var array = [];
+            array = JSON.parse(request.response);
+            console.log(array);
+        }
+    };
 }
 
 function login(){

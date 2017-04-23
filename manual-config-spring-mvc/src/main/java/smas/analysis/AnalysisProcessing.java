@@ -79,7 +79,7 @@ public class AnalysisProcessing {
 
     public List<String> processJson(String json){
 
-        Map<String, Long> preferences = Arrays.stream(json.split("[\\s,./\":\\n]"))
+        Map<String, Long> preferences = Arrays.stream(json.split("[\\s,./\":\\n?]"))
             .filter(word -> (word.length() > 1) && (graphService.findNodeByNotion(word) != null))
             .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
