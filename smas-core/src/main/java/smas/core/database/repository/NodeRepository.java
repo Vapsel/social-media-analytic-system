@@ -15,19 +15,19 @@ public interface NodeRepository extends JpaRepository<IntelligentNodeData, Long>
     List<CategoryData> findAllCategories();
 
     /**
-     * Find all nodes that have <code>notion</code> started with <code>searchText</code>.
+     * Find all nodes that have <code>name</code> started with <code>searchText</code>.
      * @param searchText Started text that will be search
      * @return List of nodes that match restriction
      */
-    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.notion) like lower(concat(?1, '%'))")
+    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.name) like lower(concat(?1, '%'))")
     List<IntelligentNodeData> findNodesStartNotion(String searchText);
 
     /**
-     * Find all nodes that have <code>notion</code> contained <code>searchText</code>.
+     * Find all nodes that have <code>name</code> contained <code>searchText</code>.
      * @param searchText Text that will be search
      * @return List of nodes that match restriction
      */
-    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.notion) like lower(concat('%', ?1, '%'))")
+    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.name) like lower(concat('%', ?1, '%'))")
     List<IntelligentNodeData> findNodesContainNotion(String searchText);
 
 }

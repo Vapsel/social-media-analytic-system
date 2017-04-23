@@ -5,3 +5,4 @@ out/
 
 # Ignore files
 *.iml
+/smas-core/src/main/resources/application.properties
