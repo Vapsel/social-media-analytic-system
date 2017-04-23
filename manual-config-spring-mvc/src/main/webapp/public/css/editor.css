@@ -1,0 +1,63 @@
+.editor-panel{
+
+}
+
+.editor-head{
+    font-size: 22px;
+    text-align: left;
+}
+
+.editor-body{
+    font-size: 16px;
+}
+
+.keyName{
+    display: block;
+}
+
+.keyForm{
+    margin: 5px;
+    border: 1px solid #afc0d7;
+}
+
+.submitBtn {
+    color: #fff;
+    background-color: #4080ff;
+    padding: 5px 70px 5px 70px;
+    border: none;
+    border-radius: 1px;
+
+    transition-property: background;
+    transition-duration: 0.2s;
+    transition-timing-function: linear, ease-in;
+}
+
+.submitBtn:hover {
+    background-color: #3b5999;
+
+    transition-property: background;
+    transition-duration: 0.5s;
+    transition-timing-function: linear, ease-in;
+}
+
+.option{
+    display: inline;
+    background: #4080ff;
+    color: #fff;
+    font-size: 12px;
+    padding: 3px;
+    margin: 3px;
+    border-radius: 2px;
+}
+
+.option-name{
+    margin: 3px;
+    padding: 3px;
+}
+
+.option-close-image{
+    margin: 3px;
+}
+.option-close-image:hover{
+    background: #fff;
+}

@@ -1,5 +1,9 @@
 package smas.web;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.JsonMapper;
@@ -16,6 +20,13 @@ import smas.analysis.AnalysisProcessing;
 import smas.core.database.service.interfaces.GraphService;
 
 import java.util.List;
+import smas.core.database.domain.CategoryData;
+import smas.core.database.domain.IntelligentNodeData;
+import smas.core.database.service.interfaces.GraphService;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 public class AjaxController {
@@ -34,6 +45,122 @@ public class AjaxController {
 
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/getCategories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> categories(){
+        List<CategoryData> list = service.findAllCategories();
+        return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getRelations", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> relations(@RequestBody String searchText){
+        List<IntelligentNodeData> list = service.findNodesWithNotion(searchText);
+        return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/editor", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> editor(@RequestBody String jsonSummary) {
+        performSummary(jsonSummary);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private void performSummary(String json) {
+        String key = getKeyFromJson(json);
+        Set<Long> relationsIds = getRelationsIds(json);
+        Set<Long> existingCategoriesIds = getExistingCategoriesIds(json);
+        Set<String> newCategoriesNames = getNewCategoriesNames(json);
+
+
+        if (!"".equals(key)) {
+            IntelligentNodeData node = new IntelligentNodeData();
+            node.setName(key);
+            node.setCategoryIds(existingCategoriesIds);
+            node.setRelatedNodesIds(relationsIds);
+
+            if (newCategoriesNames.size() == 0) {
+                service.save(node);
+            } else {
+                service.save(node, newCategoriesNames);
+            }
+        }else{
+            for(String categoryName : newCategoriesNames){
+                CategoryData category = new CategoryData();
+                category.setName(categoryName);
+                service.save(category);
+                //maybe better to create save method which get a Set of categories as a parametr
+            }
+        }
+    }
+
+    private String getKeyFromJson(String json) {
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(json);
+        JsonObject rootObject = jsonElement.getAsJsonObject();
+
+        String key = rootObject.get("key").getAsString();
+
+        return key;
+    }
+
+    private Set<Long> getRelationsIds(String json) {
+        Set<Long> set = new HashSet<>();
+
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(json);
+        JsonObject rootObject = jsonElement.getAsJsonObject();
+
+        JsonArray relations = rootObject.get("relations").getAsJsonArray();
+
+        if (relations != null) {
+            for (int i = 0; i < relations.size(); ++i) {
+                JsonObject relation = relations.get(i).getAsJsonObject();
+                Long id = relation.get("value").getAsLong();
+                set.add(id);
+            }
+        }
+
+        return set;
+    }
+
+    private Set<Long> getExistingCategoriesIds(String json) {
+        Set<Long> set = new HashSet<>();
+
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(json);
+        JsonObject rootObject = jsonElement.getAsJsonObject();
+
+        JsonArray categories = rootObject.get("existingCategories").getAsJsonArray();
+
+        if (categories != null) {
+            for (int i = 0; i < categories.size(); ++i) {
+                JsonObject relation = categories.get(i).getAsJsonObject();
+                Long id = relation.get("value").getAsLong();
+                set.add(id);
+            }
+        }
+
+        return set;
+    }
+
+    private Set<String> getNewCategoriesNames(String json) {
+        Set<String> set = new HashSet<>();
+
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(json);
+        JsonObject rootObject = jsonElement.getAsJsonObject();
+
+        JsonArray categories = rootObject.get("newCategories").getAsJsonArray();
+
+        if (categories != null) {
+            for (int i = 0; i < categories.size(); ++i) {
+                JsonObject relation = categories.get(i).getAsJsonObject();
+                String id = relation.get("label").getAsString();
+                set.add(id);
+            }
+        }
+
+        return set;
     }
 
     private User parseUserData(String jsonString) {

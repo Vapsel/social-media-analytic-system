@@ -15,7 +15,7 @@ public class IntelligentNodeData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String notion;
+    private String name;
 
     @ElementCollection(targetClass = Long.class, fetch = FetchType.EAGER)
     private Set<Long> categoryIds;
