@@ -32,7 +32,7 @@ public interface NodeRepository extends JpaRepository<IntelligentNodeData, Long>
     @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.name) LIKE lower(concat('%', ?1, '%'))")
     List<IntelligentNodeData> findNodesContainNotion(String searchText);
 
-    @Query("SELECT n FROM IntelligentNodeData n WHERE ?1 LIKE concat('%', n.name, '%')")
+    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(?1) LIKE lower(concat('%', n.name, '%'))")
     Page<IntelligentNodeData> findNodeByNotion(String searchText, Pageable pageable);
 
 }
