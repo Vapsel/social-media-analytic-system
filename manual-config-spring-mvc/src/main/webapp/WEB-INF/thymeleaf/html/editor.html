@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/head::head">
+    <meta charset="UTF-8">
+    <title id="pageTitle">SMAS | Editor</title>
+</head>
+<body>
+
+<!--<script src="js/fbapi.js"></script><script src="js/fbapi.js"></script>-->
+
+<header>
+    <nav class="navbar navbar-toggleable-sm navbar-light bg-faded fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <span class="navbar-brand" id="">sm<span id="a">a</span>s</span>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="login.html">Home<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="whatIsThis.html">What is this</a>
+                <a class="nav-item nav-link" href="contact.htm">Contact</a>
+                <a class="nav-item nav-link active" href="editor.html">Editor</a>
+
+                <!--<button class="nav-item nav-link " id="logOutBtn" onclick="logout()">Log Out</button>-->
+            </div>
+
+        </div>
+    </nav>
+</header>
+
+<section>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-1"></div>
+            <div class="col-10 info">
+                <div class="editor-panel">
+                    <div class="editor-head">
+                        Editor mode
+                    </div>
+                    <div class="editor-body">
+                        <p>
+                            <span class="keyName">Key Name</span>
+                            <input type="text" name="name" class="keyForm" id="keyForm">
+                        </p>
+
+                        <p>
+                            <vaadin-combo-box
+                                    id="categories"
+                                    items="[[items]]"
+                                    label="Category"
+                                    allow-custom-value="true"
+                                    item-label-path="name"
+                                    item-value-path="symbol">
+                            </vaadin-combo-box>
+                        <p>Selected categories:
+                            <span id="selected-category"></span>
+                        </p>
+
+                        <script>fillCategories()</script>
+                        </p>
+
+                        <p>
+                            <vaadin-combo-box
+                                    id="relations"
+                                    items="[[items]]"
+                                    label="Relations"
+                                    item-label-path="name"
+                                    item-value-path="symbol">
+                            </vaadin-combo-box>
+
+                            <p>Selected relations:
+                                <div id="selected-relations"></div>
+                            </p>
+
+                            <script>fillRelations()</script>
+
+                        </p>
+
+                        <button type="submit" class="submitBtn" onclick="btnAddAction()">Add to tree</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
