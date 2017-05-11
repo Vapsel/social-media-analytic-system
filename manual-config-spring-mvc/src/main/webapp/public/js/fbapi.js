@@ -64,15 +64,41 @@ function sendJsonViaAjax(response) {
     request.send(fbJson);
 }
 
+var jsonResponseGlobal;
+
 function login(){
     FB.login(function (loginResponse) {
         if (loginResponse.authResponse) {
             console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me?fields=location,hometown,name,likes{name,location},photos{place},work', function (jsonResponse) {
-                sendJsonViaAjax(jsonResponse)
-            });
+            // FB.api('/me?fields=location,hometown,name,likes{name,location},photos{place},work', function (jsonResponse) {
+            FB.api('me?fields=likes.limit(5)',
+                function (jsonResponse) {
+                    jsonResponseGlobal = jsonResponse;
+                    receiveLikes(jsonResponse.likes);
+                }
+            );
         } else {
             console.log('User cancelled login or did not fully authorize.');
         }
     }, {scope: 'user_hometown, user_location, user_about_me, email, public_profile'});
+}
+
+var likes = [];
+
+function receiveLikes(responseLikes) {
+    if(responseLikes.data.length > 0){
+        likes = likes.concat(responseLikes.data);
+        console.log(responseLikes.paging.next);
+    }
+
+    if(responseLikes.paging.next) {
+        FB.api(responseLikes.paging.next, // get the next page
+            'GET',
+            {}, // LEAVE THIS EMPTY
+            receiveLikes
+        );
+    } else {
+        jsonResponseGlobal.likes.data = likes;
+        sendJsonViaAjax(jsonResponseGlobal);
+    }
 }
