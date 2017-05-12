@@ -1,6 +1,8 @@
 package smas.core.database.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import smas.core.database.domain.CategoryData;
@@ -70,5 +72,18 @@ public class GraphServiceImpl implements GraphService{
             return nodeRepository.findNodesContainNotion(searchText);
         }
         return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IntelligentNodeData findNodeByNotion(String searchText) {
+        Page<IntelligentNodeData> result = nodeRepository.findNodeByNotion(searchText, new PageRequest(0, 1));
+        List<IntelligentNodeData> content = result.getContent();
+        if (content.size() > 0){
+            return content.get(0);
+        }
+        return null;
     }
 }
