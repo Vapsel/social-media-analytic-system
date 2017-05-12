@@ -1,5 +1,3 @@
-var responseCollector;
-
 window.fbAsyncInit = function () {
     FB.init({
         appId: '744869465672302',
@@ -64,44 +62,17 @@ function sendJsonViaAjax(response) {
     var fbJson = JSON.stringify(response);
     request.open("POST", '/userJson', true);
     request.send(fbJson);
-    request.onreadystatechange = function () {
-        if (request.readyState == 3 && request.status == 200) {
-            var array = [];
-            array = JSON.parse(request.response);
-            console.log(array);
-        }
-    };
 }
 
 function login(){
     FB.login(function (loginResponse) {
         if (loginResponse.authResponse) {
             console.log('Welcome!  Fetching your information.... ');
-            // var responseCollector;
-            FB.api('/me?fields=location,hometown,name,likes{name,location},photos{place},work,posts', abc);
-
+            FB.api('/me?fields=location,hometown,name,likes{name,location},photos{place},work', function (jsonResponse) {
+                sendJsonViaAjax(jsonResponse)
+            });
         } else {
             console.log('User cancelled login or did not fully authorize.');
         }
-    }, {scope: 'user_likes, user_photos, user_about_me, user_posts, public_profile'});
-}
-
-function abc(jsonResponse) {
-    responseCollector += jsonResponse;
-    if (jsonResponse.likes.paging.next != undefined){
-        $.ajax({
-            type: "GET",
-            url: jsonResponse.likes.paging.next,
-            success: function(data, textStatus, jqXHR){
-                if (data.paging.next != undefined){
-                    responseCollector += data;
-                    abc(data)
-                }
-            },
-            fail: function(errMsg) {
-                console.log(+errMsg);
-            }
-        });
-    }
-    sendJsonViaAjax(jsonResponse);
+    }, {scope: 'user_hometown, user_location, user_about_me, email, public_profile'});
 }
