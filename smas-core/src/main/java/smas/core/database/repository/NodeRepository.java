@@ -21,7 +21,7 @@ public interface NodeRepository extends JpaRepository<IntelligentNodeData, Long>
      * @param searchText Started text that will be search
      * @return List of nodes that match restriction
      */
-    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.name) like lower(concat(?1, '%'))")
+    @Query("SELECT n FROM IntelligentNodeData n WHERE lower(n.name) LIKE lower(concat(?1, '%'))")
     List<IntelligentNodeData> findNodesStartNotion(String searchText);
 
     /**
