@@ -1,5 +1,5 @@
 ext {
-    mainClassFullName = 'com.snas.sample.Demo'
+    mainClassFullName = 'com.smas.solver.SATManager'
 }
 mainClassName = mainClassFullName
 
@@ -13,7 +13,4 @@ jar {
 dependencies{
     compile group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.core', version: '2.3.5'
     compile group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.pb', version: '2.3.5'
-
-    compile group: 'junit', name: 'junit', version: '4.12'
-
 }
