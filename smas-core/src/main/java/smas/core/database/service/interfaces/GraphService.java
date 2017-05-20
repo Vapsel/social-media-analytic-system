@@ -52,4 +52,11 @@ public interface GraphService {
      * @return Nodes that satisfy query from first or second step.
      */
     List<IntelligentNodeData> findNodesWithNotion(String searchText);
+
+    /**
+     * Search for node where <code>searchText</code> is like persisted node's notion.
+     * @param searchText Query text
+     * @return Node that has similar <code>notion</code> as <code>searchText</code>
+     */
+    IntelligentNodeData findNodeByNotion(String searchText);
 }
