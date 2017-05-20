@@ -70,9 +70,8 @@ function login(){
     FB.login(function (loginResponse) {
         if (loginResponse.authResponse) {
             console.log('Welcome!  Fetching your information.... ');
-            // FB.api('/me?fields=location,hometown,name,likes{name,location},photos{place},work', function (jsonResponse) {
-            FB.api('me?fields=likes.limit(5)',
-                function (jsonResponse) {
+            FB.api('/me?fields=location,hometown,name,likes{name,location},photos{place},work', function (jsonResponse) {
+            //FB.api('me?fields=likes.limit(5)',
                     jsonResponseGlobal = jsonResponse;
                     receiveLikes(jsonResponse.likes);
                 }
@@ -80,7 +79,7 @@ function login(){
         } else {
             console.log('User cancelled login or did not fully authorize.');
         }
-    }, {scope: 'user_hometown, user_location, user_about_me, email, public_profile'});
+    }, {scope: 'user_hometown, user_location, user_likes, user_about_me, user_posts, email, public_profile'});
 }
 
 var likes = [];
@@ -88,10 +87,10 @@ var likes = [];
 function receiveLikes(responseLikes) {
     if(responseLikes.data.length > 0){
         likes = likes.concat(responseLikes.data);
-        console.log(responseLikes.paging.next);
+        //console.log(responseLikes.paging.next);
     }
 
-    if(responseLikes.paging.next) {
+    if(responseLikes.paging && responseLikes.paging.next) {
         FB.api(responseLikes.paging.next, // get the next page
             'GET',
             {}, // LEAVE THIS EMPTY

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/head::head">
+    <meta charset="UTF-8">
+    <title id="pageTitle">SMAS | Summary</title>
+</head>
+
+<body>
+<div th:replace="fragments/head::header"></div>
+
+<section>
+    <vaadin-grid id="simple">
+
+        <vaadin-grid-column width="50px" flex-grow="0">
+            <template class="header">#</template>
+            <template>[[[[index]]]]</template>
+        </vaadin-grid-column>
+
+        <vaadin-grid-column width="calc(50% - 100px)">
+            <template class="header">Value</template>
+            <template>[[[[item.value]]]]</template>
+        </vaadin-grid-column>
+
+        <vaadin-grid-column width="calc(50% - 100px)">
+            <template class="header">Amount</template>
+            <template>[[[[item.amount]]]]</template>
+        </vaadin-grid-column>
+
+    </vaadin-grid>
+    <script>
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '744869465672302',
+                cookie: true,  // enable cookies to allow the server to access
+                               // the session
+                xfbml: true,  // parser social plugins on this page
+                version: 'v2.8', // use graph api version 2.8
+            });
+
+            fillTable();
+        };
+
+        // Load the SDK asynchronously
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function fill(id) {
+            HTMLImports.whenReady(function () {
+                var grid = document.querySelector('#simple');
+
+                grid.dataProvider = function (params, callback) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.onload = function () {
+                        grid.size = JSON.parse(xhr.responseText).size;
+                        console.log(JSON.parse(xhr.responseText).result);
+                        callback(JSON.parse(xhr.responseText).result);
+                    };
+                    var index = params.page * params.pageSize;
+                    xhr.open('POST', '/getSummary', true);
+                    xhr.send(id);
+                };
+            });
+        }
+
+        function fillTable() {
+            FB.login(function (loginResponse) {
+                if (loginResponse.authResponse) {
+                    console.log('Welcome!  Fetching your information.... ');
+                    FB.api('me?fields=id', function (jsonResponse) {
+                            fill(jsonResponse.id);
+                        }
+                    );
+                } else {
+                    console.log('User cancelled login or did not fully authorize.');
+                }
+            }, {scope: 'user_hometown, user_location, user_likes, user_about_me, user_posts, email, public_profile'});
+        }
+
+    </script>
+</section>
+</body>
+</html>
