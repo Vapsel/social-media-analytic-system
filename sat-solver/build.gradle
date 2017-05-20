@@ -1,16 +1,19 @@
+// TODO replace
 ext {
     mainClassFullName = 'com.smas.solver.SATManager'
 }
 mainClassName = mainClassFullName
 
 jar {
-    manifest {
-        attributes 'Main-Class': mainClassFullName
-    }
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    version '0.0.1'
+//    manifest {
+//        attributes 'Main-Class': mainClassFullName
+//    }
+//    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 dependencies{
+    compile group: 'org.springframework', name: 'spring-context', version: "${springVersion}"
     compile group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.core', version: '2.3.5'
     compile group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.pb', version: '2.3.5'
 }

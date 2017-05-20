@@ -1,6 +1,6 @@
-package com.smas.solver;
+package com.smas.solver.file.creator;
 
-import com.smas.solver.aggregators.IVarAggregator;
+import com.smas.solver.aggregators.VariableAggregator;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,7 +16,7 @@ import java.util.Map;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static java.nio.file.StandardOpenOption.WRITE;
 
-public class CnfFileCreator {
+public class CNFFileCreator {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
     private static final String CNF_FILE_SUFFIX = "_smas_problem.cnf";
@@ -32,7 +32,7 @@ public class CnfFileCreator {
      */
     private static final String FIRST_LINE_FORMAT = "p cnf %d %d";
 
-    public Path transformToCnfFile(IVarAggregator aggregator, Map<Integer, String> varMap) throws IOException {
+    public Path transformToCnfFile(VariableAggregator aggregator, Map<Integer, String> varMap) throws IOException {
 
         Collection<Collection<String>> prefCategories = aggregator.aggregateAll();
         if (prefCategories == null){

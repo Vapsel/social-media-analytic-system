@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import smas.analysis.AnalysisProcessing;
+import smas.analysis.SATProcessing;
 import smas.core.database.domain.CategoryData;
 import smas.core.database.domain.IntelligentNodeData;
 import smas.core.database.service.interfaces.GraphService;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
 public class AjaxController {
@@ -30,11 +31,29 @@ public class AjaxController {
     @Autowired
     GraphService service;
 
+    @Autowired
+    AnalysisProcessing analysisProcessing;
+
+    @Autowired
+    SATProcessing satProcessing;
+
     @RequestMapping(value = "/userJson", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> receiveResponse(@RequestBody String json) {
         User user = parseUserData(json);
 
         printUserInfo(user);
+
+        List<String> sentences = new ArrayList<>();
+        sentences.add(json);
+
+        Map<String, Long> preferencesMap = analysisProcessing.processSentences(sentences);
+
+        try {
+            String answer = satProcessing.getSATAnswer(sentences);
+        } catch (IOException e) {
+            // todo log and return error
+            e.printStackTrace();
+        }
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

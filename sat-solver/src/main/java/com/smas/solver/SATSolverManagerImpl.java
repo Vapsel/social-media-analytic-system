@@ -1,6 +1,7 @@
 package com.smas.solver;
 
-import com.smas.solver.aggregators.TestAggregator;
+import com.smas.solver.aggregators.VariableAggregator;
+import com.smas.solver.file.creator.CNFFileCreator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.sat4j.pb.SolverFactory;
@@ -11,45 +12,45 @@ import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.IProblem;
 import org.sat4j.specs.ISolver;
 import org.sat4j.specs.TimeoutException;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SATManager {
+@Service
+public class SATSolverManagerImpl implements SATSolverManager{
+
+    private CNFFileCreator fileCreator;
 
     /**
      * 1 hour timeout for solver
      */
     private final static int TIMEOUT_MINUTES = 3600;
 
-    private static final Logger logger = LogManager.getLogger(SATManager.class.getName());
+    private static final Logger logger = LogManager.getLogger(SATSolverManagerImpl.class.getName());
 
-    // TODO replace static
-    public static void main(String[] args) throws IOException, ParseFormatException {
+    @Override
+    public String resolveSatisfiableProblem(VariableAggregator aggregator) throws IOException {
 
-        PrintStream out = new PrintStream(System.out, true, Charset.forName("UTF-8").name());
-
-        TestAggregator testAggregator = new TestAggregator();
-        CnfFileCreator creator = new CnfFileCreator();
         Map<Integer, String> varMap = new HashMap<>();
-        Path path = creator.transformToCnfFile(testAggregator, varMap);
+        Path path = fileCreator.transformToCnfFile(aggregator, varMap);
 
         int[] model = runSatSolver(path);
         if (model == null){
             throw new IllegalStateException("File can't be processed by SAT solver");
         }
 
-        out.println("Satisfiability problem can be solved in following way:");
-        out.println(composeAnswer(model, varMap));
+        String answer = composeAnswer(model, varMap);
+        String message = String.format("Satisfiability problem for file %s can be solved in following way: %s",
+                path.getFileName(), answer);
+        logger.debug(message);
 
+        return answer;
     }
 
-    // TODO replace static
-    private static int[] runSatSolver(Path path){
+    private int[] runSatSolver(Path path){
         ISolver solver = SolverFactory.newDefault();
         solver.setTimeout(TIMEOUT_MINUTES);
         Reader reader = new DimacsReader(solver);
@@ -74,7 +75,7 @@ public class SATManager {
      * @param variableMap Map of variables that were used in SAT problem
      * @return Readable result string
      */
-    private static String composeAnswer(int[] model, Map<Integer, String> variableMap){
+    private String composeAnswer(int[] model, Map<Integer, String> variableMap){
 
         StringBuilder resultString = new StringBuilder();
         for (Integer i: model){

@@ -48,8 +48,10 @@ public class GraphServiceImpl implements GraphService{
     @Override
     public void save(IntelligentNodeData node, Collection<String> newCategories) {
         Set<Long> categoryIds = newCategories.stream()
-                .map(s -> categoryRepository.saveAndFlush(new CategoryData(s)).getId())
+                .map(s -> categoryRepository.save(new CategoryData(s)).getId())
                 .collect(Collectors.toSet());
+        // TODO test
+        categoryRepository.flush();
         node.setCategoryIds(categoryIds);
         save(node);
     }

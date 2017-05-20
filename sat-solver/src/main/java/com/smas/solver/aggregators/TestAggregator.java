@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TestAggregator implements IVarAggregator {
+public class TestAggregator implements VariableAggregator {
 
     @Override
     public Collection<Collection<String>> aggregateAll() {

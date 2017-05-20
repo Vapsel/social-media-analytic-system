@@ -1,6 +1,5 @@
 package smas.analysis;
 
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import smas.core.database.domain.IntelligentNodeData;
@@ -10,7 +9,6 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor
 @Component
 public class AnalysisProcessing {
 
