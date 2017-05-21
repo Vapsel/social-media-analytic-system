@@ -1,9 +1,6 @@
 package smas.web;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.JsonMapper;
@@ -41,15 +38,15 @@ public class AjaxController {
     public ResponseEntity<?> receiveResponse(@RequestBody String json) {
         User user = parseUserData(json);
 
-        printUserInfo(user);
+//        printUserInfo(user);
 
-        List<String> sentences = new ArrayList<>();
-        sentences.add(json);
+        Set<String> descriptions = retrieveDescriptionsFromJson(json);
 
-        Map<String, Long> preferencesMap = analysisProcessing.processSentences(sentences);
+        Map<String, Long> preferencesMap = analysisProcessing.processSentences(descriptions);
 
+        String answer = null;
         try {
-            String answer = satProcessing.getSATAnswer(sentences);
+            answer = satProcessing.getSATAnswer(descriptions);
         } catch (IOException e) {
             // todo log and return error
             e.printStackTrace();
@@ -201,6 +198,26 @@ public class AjaxController {
         info.append("Likes").append(splitter).append(user.getLikes()).append("\n");
 
         System.out.print(info.toString());
+    }
+
+    /**
+     * Parse string as JSON object and retrieve <code>about</code> section from each <code>like</code>
+     * @param json JSON object as string
+     * @return All <code>abouts</code> that were found
+     */
+    private Set<String> retrieveDescriptionsFromJson(String json){
+
+        Set<String> descriptions = new HashSet<>();
+        Gson gson = new Gson();
+        gson.fromJson(json, JsonElement.class).getAsJsonObject().get("likes")
+                .getAsJsonObject().get("data").getAsJsonArray()
+                .forEach(likeObj -> {
+                    JsonElement about = likeObj.getAsJsonObject().get("about");
+                    if (about != null){
+                        descriptions.add(about.getAsString());
+                    }
+                });
+        return descriptions;
     }
 
 }
