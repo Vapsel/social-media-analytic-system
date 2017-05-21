@@ -47,7 +47,7 @@ public class SATSolverManagerImpl implements SATSolverManager{
         String answer = composeAnswer(model, varMap);
         String message = String.format("Satisfiability problem for file %s can be solved in following way: %s",
                 path.getFileName(), answer);
-        logger.debug(message);
+        logger.info(message);
 
         return answer;
     }
