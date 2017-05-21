@@ -70,7 +70,7 @@ function login(){
     FB.login(function (loginResponse) {
         if (loginResponse.authResponse) {
             console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me?fields=location,hometown,name,likes{name,location},photos{place},work', function (jsonResponse) {
+            FB.api('/me?fields=location,hometown,name,likes{name,location,about},photos{place},work', function (jsonResponse) {
             //FB.api('me?fields=likes.limit(5)',
                     jsonResponseGlobal = jsonResponse;
                     receiveLikes(jsonResponse.likes);

@@ -1,7 +1,8 @@
-package com.smas.solver;
+package smas.solver;
 
-import com.smas.solver.aggregators.VariableAggregator;
-import com.smas.solver.file.creator.CNFFileCreator;
+import org.springframework.beans.factory.annotation.Autowired;
+import smas.solver.aggregators.VariableAggregator;
+import smas.solver.file.creator.CNFFileCreator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.sat4j.pb.SolverFactory;
@@ -22,6 +23,7 @@ import java.util.Map;
 @Service
 public class SATSolverManagerImpl implements SATSolverManager{
 
+    @Autowired
     private CNFFileCreator fileCreator;
 
     /**

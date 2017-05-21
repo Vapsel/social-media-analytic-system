@@ -1,7 +1,7 @@
 package smas.analysis;
 
-import com.smas.solver.SATSolverManager;
-import com.smas.solver.aggregators.VariableAggregator;
+import smas.solver.SATSolverManager;
+import smas.solver.aggregators.VariableAggregator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import smas.core.database.domain.CategoryData;
@@ -26,11 +26,23 @@ public class SATProcessing {
     @Autowired
     SATSolverManager satSolverManager;
 
+    /**
+     * Produces answer for satisfiable problem as inline string of positive and negative preferences
+     * @param sentences Texts that user likes
+     * @return Answer
+     * @throws IOException *
+     */
     public String getSATAnswer(Collection<String> sentences) throws IOException {
 
         return satSolverManager.resolveSatisfiableProblem(getCategoriesAggregator(sentences));
     }
 
+    // TODO optimize algorithm of category mapping
+    /**
+     * Creates instance of interface to pass to SAT solver module
+     * @param sentences Texts that user likes
+     * @return New instance
+     */
     private VariableAggregator getCategoriesAggregator(Collection<String> sentences){
 
         Map<Long, Set<String>> longSetMap = graphService.findAllCategories().stream()
@@ -42,6 +54,7 @@ public class SATProcessing {
                                 .add(entry.getKey().getName())));
 
         final Collection<Collection<String>> values = longSetMap.values().stream()
+                .filter(set -> !set.isEmpty())
                 .map(HashSet::new)
                 .collect(Collectors.toSet());
 

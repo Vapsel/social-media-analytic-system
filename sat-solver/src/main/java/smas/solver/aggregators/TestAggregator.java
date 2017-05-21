@@ -1,10 +1,12 @@
-package com.smas.solver.aggregators;
+package smas.solver.aggregators;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+// TODO delete in future versions
+@Deprecated
 public class TestAggregator implements VariableAggregator {
 
     @Override
