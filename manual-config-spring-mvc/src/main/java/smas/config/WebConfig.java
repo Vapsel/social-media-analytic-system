@@ -17,7 +17,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("smas.web")
+@ComponentScan("smas")
 public class WebConfig extends WebMvcConfigurerAdapter{
 
     /**
