@@ -71,10 +71,10 @@ public class CNFFileCreator {
                     formulaLine.append(existingVariable.get(0).getKey());
                 } else {
                     formulaLine.append(++i);
+                    varMap.put(i, pref);
                 }
                 formulaLine.append(" ");
 
-                varMap.put(i, pref);
             }
             formulaLine.append(CNF_FORMULA_END);
             lines.add(commentLine.toString());
@@ -89,6 +89,7 @@ public class CNFFileCreator {
     private Path writeFile(List<String> lines) throws IOException {
 
         String filename = LocalDateTime.now().format(formatter) + CNF_FILE_SUFFIX;
+        // TODO Can't process more than one file per second. Add nanoseconds to the file name
         return Files.write(Paths.get(PATH_TO_CNF_FILES_STORAGE + filename), lines, CREATE_NEW, WRITE);
     }
 
