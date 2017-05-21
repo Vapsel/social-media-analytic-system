@@ -1,6 +1,7 @@
-package com.smas.solver.file.creator;
+package smas.solver.file.creator;
 
-import com.smas.solver.aggregators.VariableAggregator;
+import org.springframework.stereotype.Component;
+import smas.solver.aggregators.VariableAggregator;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,11 +13,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static java.nio.file.StandardOpenOption.WRITE;
 
+@Component
 public class CNFFileCreator {
+
+    /**
+     * Property contains path to Tomcat server. Tomcat's start script will set this property.
+     */
+    private static final String CATALINA_BASE_PROPERTY = System.getProperty("catalina.base");
+
+    /**
+     * Directory on tomcat server where CNF files will be saved
+     */
+    private static final String DIRECTORY_FOR_CNF_FILES = "/webapps/";
+
+    private static final String PATH_TO_CNF_FILES_STORAGE = CATALINA_BASE_PROPERTY + DIRECTORY_FOR_CNF_FILES;
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
     private static final String CNF_FILE_SUFFIX = "_smas_problem.cnf";
@@ -44,11 +59,19 @@ public class CNFFileCreator {
         for(Collection<String> category : prefCategories){
 
             StringBuilder commentLine = new StringBuilder("c ");
-            StringBuilder formulaLine = new StringBuilder("");
+            StringBuilder formulaLine = new StringBuilder();
             for (String pref : category){
                 commentLine.append(pref);
                 commentLine.append(" ");
-                formulaLine.append(++i);
+
+                List<Map.Entry<Integer, String>> existingVariable = varMap.entrySet().stream()
+                        .filter(s -> s.getValue().equals(pref))
+                        .collect(Collectors.toList());
+                if (!existingVariable.isEmpty()){
+                    formulaLine.append(existingVariable.get(0).getKey());
+                } else {
+                    formulaLine.append(++i);
+                }
                 formulaLine.append(" ");
 
                 varMap.put(i, pref);
@@ -66,7 +89,7 @@ public class CNFFileCreator {
     private Path writeFile(List<String> lines) throws IOException {
 
         String filename = LocalDateTime.now().format(formatter) + CNF_FILE_SUFFIX;
-        return Files.write(Paths.get("./" + filename), lines, CREATE_NEW, WRITE);
+        return Files.write(Paths.get(PATH_TO_CNF_FILES_STORAGE + filename), lines, CREATE_NEW, WRITE);
     }
 
 }
