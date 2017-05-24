@@ -18,9 +18,11 @@ import smas.analysis.SATProcessing;
 import smas.core.database.domain.CategoryData;
 import smas.core.database.domain.IntelligentNodeData;
 import smas.core.database.service.interfaces.GraphService;
+import smas.dto.PreferencesResponseDTO;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 public class AjaxController {
@@ -36,13 +38,12 @@ public class AjaxController {
 
     @RequestMapping(value = "/userJson", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> receiveResponse(@RequestBody String json) {
-        User user = parseUserData(json);
-
-//        printUserInfo(user);
 
         Set<String> descriptions = retrieveDescriptionsFromJson(json);
 
-        Map<String, Long> preferencesMap = analysisProcessing.processSentences(descriptions);
+        List<String> sortedPreferences = analysisProcessing.processSentences(descriptions).entrySet().stream()
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
 
         String answer = null;
         try {
@@ -52,7 +53,9 @@ public class AjaxController {
             e.printStackTrace();
         }
 
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        PreferencesResponseDTO responseDTO = new PreferencesResponseDTO(answer, sortedPreferences);
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getCategories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

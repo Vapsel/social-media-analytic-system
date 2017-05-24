@@ -62,6 +62,7 @@ function sendJsonViaAjax(response) {
     var fbJson = JSON.stringify(response);
     request.open("POST", '/userJson', true);
     request.send(fbJson);
+    request.onreadystatechange = fillPreferences;
 }
 
 var jsonResponseGlobal;
@@ -99,5 +100,16 @@ function receiveLikes(responseLikes) {
     } else {
         jsonResponseGlobal.likes.data = likes;
         sendJsonViaAjax(jsonResponseGlobal);
+    }
+}
+
+function fillPreferences() {
+    if (this.readyState == 3 && this.status == 200) {
+        var $body = $('body');
+        var responseDTO = JSON.parse(this.response);
+        $body.append($('<div/>').append(responseDTO.satAnswer));
+        responseDTO.sortedPreferences.forEach(function (value) {
+            $body.append($('<div/>').append(value));
+        })
     }
 }
