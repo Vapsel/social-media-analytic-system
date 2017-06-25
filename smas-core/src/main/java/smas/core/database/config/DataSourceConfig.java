@@ -22,7 +22,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableJpaRepositories(basePackages = DataSourceConfig.PACKAGE_TO_SCAN_REPOSITORIES)
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:database_application.properties")
 public class DataSourceConfig {
 
     static final String PACKAGE_TO_SCAN_REPOSITORIES = "smas.core.database.repository";

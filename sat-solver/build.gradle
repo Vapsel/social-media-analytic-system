@@ -8,4 +8,7 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-context', version: "${springVersion}"
     compile group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.core', version: '2.3.5'
     compile group: 'org.ow2.sat4j', name: 'org.ow2.sat4j.pb', version: '2.3.5'
+
+    compile group: 'com.googlecode.aima-java', name: 'aima-core', version: '3.0.0'
+
 }

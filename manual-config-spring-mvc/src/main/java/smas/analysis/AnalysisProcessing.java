@@ -36,7 +36,7 @@ public class AnalysisProcessing {
     public Map<IntelligentNodeData, Long> findKeywordsInSentences(Collection<String> sentences){
 
         Map<IntelligentNodeData, Long> preferences = sentences.stream()
-                .map(sentence -> sentence.split(" "))
+                .map(sentence -> sentence.split(" "))// todo split by comma, dots etc.
                 .flatMap(Arrays::stream)
                 .filter(word -> (word.length() > 1))
                 .map(graphService::findNodeByNotion)

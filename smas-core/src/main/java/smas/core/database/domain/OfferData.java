@@ -6,10 +6,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Set;
 
-@Setter
 @Getter
+@Setter
 @Entity
-public class IntelligentNodeData {
+public class OfferData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +18,5 @@ public class IntelligentNodeData {
     private String name;
 
     @ElementCollection(targetClass = Long.class, fetch = FetchType.EAGER)
-    private Set<Long> categoryIds;
-
-    // TODO change mapping (additional column not table)
-    @ElementCollection(targetClass = Long.class, fetch = FetchType.EAGER)
     private Set<Long> relatedNodesIds;
-
 }
