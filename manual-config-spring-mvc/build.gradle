@@ -1,21 +1,26 @@
-repositories {
-    mavenCentral()
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
+
+apply plugin: 'org.springframework.boot'
 
 // TODO make runnable jar
-mainClassName = 'smas.WebApplication'
+//mainClassName = 'smas.WebApplication'
 
-apply plugin: 'war'
-
-war {
-    baseName = 'manual-config-spring-mvc'
-    version =  '0.0.1'
-}
+//apply plugin: 'war'
+//
+//war {
+//    baseName = 'manual-config-spring-mvc'
+//    version =  '0.0.1'
+//}
 
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.5.4.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: "${springBootVersion}"
     compile group: 'org.springframework.social', name: 'spring-social-twitter', version: '1.1.2.RELEASE'
     compile group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "${springBootVersion}"
 
     // FIX ??? what was fixed?
     compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.10'
