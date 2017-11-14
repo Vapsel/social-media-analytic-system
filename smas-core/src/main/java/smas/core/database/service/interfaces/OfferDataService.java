@@ -13,4 +13,6 @@ public interface OfferDataService {
      * @param offerData Offer to persist
      */
     OfferData save(OfferData offerData);
+
+    OfferData findOfferById(Long offerId);
 }

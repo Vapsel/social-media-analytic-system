@@ -5,4 +5,6 @@ import smas.core.database.domain.OfferData;
 
 public interface OfferRepository extends JpaRepository<OfferData, Long> {
 
+    OfferData findOfferDataById(Long offerId);
+
 }

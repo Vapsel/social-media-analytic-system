@@ -22,4 +22,9 @@ public class OfferDataServiceImpl implements OfferDataService {
     public OfferData save(OfferData offerData) {
         return offerRepository.save(offerData);
     }
+
+    @Override
+    public OfferData findOfferById(Long offerId) {
+        return offerRepository.findOfferDataById(offerId);
+    }
 }

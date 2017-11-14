@@ -14,12 +14,19 @@
             th:text="${friend.name}">Friend</li>
     </ul>
 
-    <h4>These are your preferences:</h4>
+    <h4>There are your preferences:</h4>
 
     <ul>
         <li th:each="preference:${preferences}">
             <span th:text="${preference.key}">Preference</span>
             <span th:text="${preference.value}">Probability</span>
+        </li>
+    </ul>
+
+    <h4>There are offers recommended for you:</h4>
+    <ul>
+        <li>
+            <a href="/offers/show/2">Oferta nr2</a>
         </li>
     </ul>
 </body>
