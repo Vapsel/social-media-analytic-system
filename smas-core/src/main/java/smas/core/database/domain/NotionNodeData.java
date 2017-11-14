@@ -9,7 +9,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-public class IntelligentNodeData {
+public class NotionNodeData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,8 @@ public class IntelligentNodeData {
 
     private String name;
 
-    @ElementCollection(targetClass = Long.class, fetch = FetchType.EAGER)
-    private Set<Long> categoryIds;
+    @ManyToOne
+    private CategoryData category;
 
     // TODO change mapping (additional column not table)
     @ElementCollection(targetClass = Long.class, fetch = FetchType.EAGER)

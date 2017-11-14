@@ -1,5 +1,6 @@
 package smas.core.database.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
 public class OfferData {
 
     @Id
@@ -17,6 +19,6 @@ public class OfferData {
 
     private String name;
 
-    @ElementCollection(targetClass = Long.class, fetch = FetchType.EAGER)
-    private Set<Long> relatedNodesIds;
+    @OneToMany
+    private Set<NotionNodeData> relatedNodes;
 }

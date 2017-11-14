@@ -48,10 +48,8 @@ public class SATProcessing {
         Map<Long, Set<String>> longSetMap = graphService.findAllCategories().stream()
                 .collect(Collectors.toMap(CategoryData::getId, c -> new HashSet<String>()));
 
-        analysisProcessing.findKeywordsInSentences(sentences).entrySet()
-                .forEach(entry -> entry.getKey().getCategoryIds()
-                        .forEach(catId -> longSetMap.get(catId)
-                                .add(entry.getKey().getName())));
+        analysisProcessing.findKeywordsInSentences(sentences)
+            .forEach((key, value) -> longSetMap.get(key.getId()).add(key.getName()));
 
         final Collection<Collection<String>> values = longSetMap.values().stream()
                 .filter(set -> !set.isEmpty())

@@ -1,10 +1,11 @@
 package smas.core.database.service.interfaces;
 
 import smas.core.database.domain.CategoryData;
-import smas.core.database.domain.IntelligentNodeData;
+import smas.core.database.domain.NotionNodeData;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public interface GraphService {
 
@@ -16,7 +17,7 @@ public interface GraphService {
      * </p>
      * @param node Node to persist
      */
-    void save(IntelligentNodeData node);
+    void save(NotionNodeData node);
 
     /**
      * Persists category in database.
@@ -33,10 +34,10 @@ public interface GraphService {
      * New categories will be persist in database and added to to <code>node</code>.
      * @param node Node to persist
      * @param newCategories New categories
-     * @see GraphService#save(IntelligentNodeData)
+     * @see GraphService#save(NotionNodeData)
      * @see GraphService#save(CategoryData)
      */
-    void save(IntelligentNodeData node, Collection<String> newCategories);
+    void save(NotionNodeData node, Collection<String> newCategories);
 
     /**
      * Find all available categories (used and unused).
@@ -51,12 +52,16 @@ public interface GraphService {
      * @param searchText Query text
      * @return Nodes that satisfy query from first or second step.
      */
-    List<IntelligentNodeData> findNodesWithNotion(String searchText);
+    List<NotionNodeData> findNodesWithNotion(String searchText);
 
     /**
      * Search for node where <code>searchText</code> is like persisted node's notion.
      * @param searchText Query text
      * @return Node that has similar <code>notion</code> as <code>searchText</code>
      */
-    IntelligentNodeData findNodeByNotion(String searchText);
+    NotionNodeData findNodeByNotion(String searchText);
+
+    Map<CategoryData, List<NotionNodeData>> retrieveCategoryToNodesMap();
+
+    List<NotionNodeData> findNodesByIds(Collection<Long> notionsIds);
 }

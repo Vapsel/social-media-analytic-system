@@ -6,15 +6,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import smas.core.database.domain.CategoryData;
-import smas.core.database.domain.IntelligentNodeData;
+import smas.core.database.domain.NotionNodeData;
 import smas.core.database.repository.CategoryRepository;
 import smas.core.database.repository.NodeRepository;
 import smas.core.database.service.interfaces.GraphService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 @Service
 @Transactional
@@ -30,7 +33,7 @@ public class GraphServiceImpl implements GraphService{
      * {@inheritDoc}
      */
     @Override
-    public void save(IntelligentNodeData node) {
+    public void save(NotionNodeData node) {
         nodeRepository.save(node);
     }
 
@@ -46,13 +49,13 @@ public class GraphServiceImpl implements GraphService{
      * {@inheritDoc}
      */
     @Override
-    public void save(IntelligentNodeData node, Collection<String> newCategories) {
+    public void save(NotionNodeData node, Collection<String> newCategories) {
         Set<Long> categoryIds = newCategories.stream()
                 .map(s -> categoryRepository.save(new CategoryData(s)).getId())
                 .collect(Collectors.toSet());
         // TODO test
         categoryRepository.flush();
-        node.setCategoryIds(categoryIds);
+//        node.setCategoryIds(categoryIds);
         save(node);
     }
 
@@ -68,8 +71,8 @@ public class GraphServiceImpl implements GraphService{
      * {@inheritDoc}
      */
     @Override
-    public List<IntelligentNodeData> findNodesWithNotion(String searchText) {
-        List<IntelligentNodeData> result = nodeRepository.findNodesStartNotion(searchText);
+    public List<NotionNodeData> findNodesWithNotion(String searchText) {
+        List<NotionNodeData> result = nodeRepository.findNodesStartNotion(searchText);
         if (result.isEmpty()){
             return nodeRepository.findNodesContainNotion(searchText);
         }
@@ -80,12 +83,22 @@ public class GraphServiceImpl implements GraphService{
      * {@inheritDoc}
      */
     @Override
-    public IntelligentNodeData findNodeByNotion(String searchText) {
-        Page<IntelligentNodeData> result = nodeRepository.findNodeByNotion(searchText, new PageRequest(0, 1));
-        List<IntelligentNodeData> content = result.getContent();
+    public NotionNodeData findNodeByNotion(String searchText) {
+        Page<NotionNodeData> result = nodeRepository.findNodeByNotion(searchText, new PageRequest(0, 1));
+        List<NotionNodeData> content = result.getContent();
         if (content.size() > 0){
             return content.get(0);
         }
         return null;
+    }
+
+    @Override
+    public Map<CategoryData, List<NotionNodeData>> retrieveCategoryToNodesMap() {
+        return nodeRepository.findAll().stream()
+            .collect(groupingBy(NotionNodeData::getCategory));
+    }
+
+    public List<NotionNodeData> findNodesByIds(Collection<Long> notionsIds){
+        return nodeRepository.findNotionNodeDataByIdIn(notionsIds);
     }
 }

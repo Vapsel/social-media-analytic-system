@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import smas.core.database.domain.IntelligentNodeData;
+import smas.core.database.domain.NotionNodeData;
 import smas.core.database.service.interfaces.GraphService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +47,7 @@ public class HomeController {
     @RequestMapping(value = "testdb", method = RequestMethod.GET)
     public void testDatabase(HttpServletResponse response,
                              @RequestParam("text") String text) throws IOException {
-        IntelligentNodeData node = new IntelligentNodeData();
+        NotionNodeData node = new NotionNodeData();
         node.setName(text);
         graphService.save(node);
         response.sendRedirect("/");

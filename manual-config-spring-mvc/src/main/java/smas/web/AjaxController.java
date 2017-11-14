@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import smas.analysis.AnalysisProcessing;
 import smas.analysis.SATProcessing;
 import smas.core.database.domain.CategoryData;
-import smas.core.database.domain.IntelligentNodeData;
+import smas.core.database.domain.NotionNodeData;
 import smas.core.database.service.interfaces.GraphService;
 import smas.dto.PreferencesResponseDTO;
 
@@ -66,7 +66,7 @@ public class AjaxController {
 
     @RequestMapping(value = "/getRelations", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> relations(@RequestBody String searchText){
-        List<IntelligentNodeData> list = service.findNodesWithNotion(searchText);
+        List<NotionNodeData> list = service.findNodesWithNotion(searchText);
         return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
     }
 
@@ -84,9 +84,9 @@ public class AjaxController {
 
 
         if (!"".equals(key)) {
-            IntelligentNodeData node = new IntelligentNodeData();
+            NotionNodeData node = new NotionNodeData();
             node.setName(key);
-            node.setCategoryIds(existingCategoriesIds);
+//            node.setCategoryIds(existingCategoriesIds);
             node.setRelatedNodesIds(relationsIds);
 
             if (newCategoriesNames.size() == 0) {

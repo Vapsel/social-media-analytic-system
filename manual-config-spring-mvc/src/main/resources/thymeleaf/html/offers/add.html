@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:include="fragments/head::head">
+    <meta charset="UTF-8">
+    <title id="pageTitle">SMAS | Add offer</title>
+</head>
+
+<body>
+
+<div th:replace="fragments/head::header"></div>
+
+<section>
+    <div class="container">
+        <form action="/offers/add" method="post" enctype="multipart/form-data">
+            <h1>Add offer</h1>
+            <div class="row">
+                <div class="col-md-12">
+                    Name: <input th:type="text" th:name="offerName" required="required">
+                </div>
+
+                <div th:each="category : ${categoryToNotions}" class="col-md-6">
+                    <h4 th:text="${category.key.name}">Category name</h4>
+
+                    <!--<span th:text="${category.value[0].name}"></span>-->
+                    <span th:each="notion, rowStat : ${category.value}">
+                        <input th:name="notions"
+                               th:id="${category.value[__${rowStat.index}__].id}" type="checkbox"
+                               th:value="${category.value[__${rowStat.index}__].id}">
+                        <label th:text="${category.value[__${rowStat.index}__].name}"
+                               th:for="${category.value[__${rowStat.index}__].id}"></label>
+                    </span>
+                </div>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+
+    </div>
+</section>
+
+</body>
+</html>

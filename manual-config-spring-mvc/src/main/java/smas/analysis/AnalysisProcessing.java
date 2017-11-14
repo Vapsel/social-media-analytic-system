@@ -2,7 +2,7 @@ package smas.analysis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import smas.core.database.domain.IntelligentNodeData;
+import smas.core.database.domain.NotionNodeData;
 import smas.core.database.service.interfaces.GraphService;
 
 import java.util.*;
@@ -33,9 +33,9 @@ public class AnalysisProcessing {
      * @return Map of keywords sorted by value in descending order.
      * @see #findKeywordsInSentences(Collection)
      */
-    public Map<IntelligentNodeData, Long> findKeywordsInSentences(Collection<String> sentences){
+    public Map<NotionNodeData, Long> findKeywordsInSentences(Collection<String> sentences){
 
-        Map<IntelligentNodeData, Long> preferences = sentences.stream()
+        Map<NotionNodeData, Long> preferences = sentences.stream()
                 .map(sentence -> sentence.split(" "))// todo split by comma, dots etc.
                 .flatMap(Arrays::stream)
                 .filter(word -> (word.length() > 1))
@@ -44,7 +44,7 @@ public class AnalysisProcessing {
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
         return preferences.entrySet().stream()
-                .sorted(Map.Entry.<IntelligentNodeData, Long>comparingByValue().reversed())
+                .sorted(Map.Entry.<NotionNodeData, Long>comparingByValue().reversed())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                         (e1, e2) -> e2, LinkedHashMap::new));
     }
