@@ -7,6 +7,8 @@ import smas.core.database.domain.OfferData;
 import smas.core.database.repository.OfferRepository;
 import smas.core.database.service.interfaces.OfferDataService;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class OfferDataServiceImpl implements OfferDataService {
@@ -26,5 +28,10 @@ public class OfferDataServiceImpl implements OfferDataService {
     @Override
     public OfferData findOfferById(Long offerId) {
         return offerRepository.findOfferDataById(offerId);
+    }
+
+    @Override
+    public List<OfferData> findAll() {
+        return offerRepository.findAll();
     }
 }

@@ -2,6 +2,8 @@ package smas.core.database.service.interfaces;
 
 import smas.core.database.domain.OfferData;
 
+import java.util.List;
+
 public interface OfferDataService {
 
     /**
@@ -15,4 +17,6 @@ public interface OfferDataService {
     OfferData save(OfferData offerData);
 
     OfferData findOfferById(Long offerId);
+
+    List<OfferData> findAll();
 }

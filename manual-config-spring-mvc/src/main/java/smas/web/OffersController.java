@@ -43,10 +43,17 @@ public class OffersController {
         return ADD_TEMPLATE;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void actionAdd(String offerName, Long[] notions, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/add/{offerId}", method = RequestMethod.POST)
+    public void actionAdd(String offerName, Long[] notions, HttpServletResponse response, @PathVariable Long offerId)
+        throws IOException {
         List<NotionNodeData> relatedNodes = graphService.findNodesByIds(Arrays.asList(notions));
-        OfferData offer = new OfferData(null, offerName, new HashSet<>(relatedNodes));
+        OfferData offer;
+        if (offerId == null) {
+            offer = new OfferData(null, offerName, new HashSet<>(relatedNodes));
+        } else  {
+            offer = offerDataService.findOfferById(offerId);
+            offer.setRelatedNodes(new HashSet<>(relatedNodes));
+        }
         offerDataService.save(offer);
         response.sendRedirect("/offers/add");
     }
@@ -62,6 +69,7 @@ public class OffersController {
         model.addAttribute("categoryToNotions", categoryToNotions);
         model.addAttribute("checkedNotionIds", checkedNotionIds);
         model.addAttribute("offer", offer);
+        model.addAttribute("id", offerId);
         return SHOW_TEMPLATE;
     }
 }

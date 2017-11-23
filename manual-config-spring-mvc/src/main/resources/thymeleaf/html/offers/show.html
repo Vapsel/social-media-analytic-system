@@ -10,11 +10,12 @@
 <div th:replace="fragments/head::header"></div>
 
 <section>
-    <div class="container" th:object="${offer}">
+    <div class="container">
         <h1>Show offer</h1>
-        <div class="row">
+    <form th:action="'/offers/add/'+${id}" method="post" enctype="multipart/form-data">
+        <div class="row" th:object="${offer}">
             <div class="col-md-12">
-                Name: <input th:value="*{name}" th:type="text" th:name="offerName" required="required" disabled="disabled">
+                Name: <input th:value="*{name}" th:type="text" th:name="offerName" required="required">
             </div>
 
             <div th:each="category : ${categoryToNotions}" class="col-md-6">
@@ -26,12 +27,14 @@
                            th:id="${category.value[__${rowStat.index}__].id}" type="checkbox"
                            th:value="${category.value[__${rowStat.index}__].id}"
                            th:checked="${#lists.contains(checkedNotionIds, category.value[__${rowStat.index}__].id)}"
-                           disabled="disabled">
+                    >
                     <label th:text="${category.value[__${rowStat.index}__].name}"
                            th:for="${category.value[__${rowStat.index}__].id}"></label>
                 </span>
             </div>
         </div>
+        <button type="submit">Edit</button>
+    </form>
     </div>
 </section>
 

@@ -1,33 +1,41 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Hello Twitter</title>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:include="fragments/head::head">
+    <meta charset="UTF-8">
+    <title id="pageTitle">Twitter</title>
 </head>
+
 <body>
+
+<div th:replace="fragments/head::header"></div>
+
+<section>
     <h3>
         Hello, <span th:text="${twitterProfile.name}">Some User</span>!
     </h3>
 
-    <h4>These are your friends:</h4>
+    <!--<h4>These are your friends:</h4>-->
 
-    <ul>
-        <li th:each="friend:${friends}"
-            th:text="${friend.name}">Friend</li>
-    </ul>
+    <!--<ul>-->
+        <!--<li th:each="friend:${friends}"-->
+            <!--th:text="${friend.name}">Friend</li>-->
+    <!--</ul>-->
 
     <h4>There are your preferences:</h4>
 
     <ul>
         <li th:each="preference:${preferences}">
-            <span th:text="${preference.key}">Preference</span>
+            <span th:text="${preference.key.name}">Preference</span>
             <span th:text="${preference.value}">Probability</span>
         </li>
     </ul>
 
     <h4>There are offers recommended for you:</h4>
     <ul>
-        <li>
-            <a href="/offers/show/2">Oferta nr2</a>
+        <li th:each="offer:${offers}">
+            <a th:href="'/offers/show/'+${offer.key}" th:text="'Oferta with rate '+${offer.value}"></a>
         </li>
     </ul>
+</section>
 </body>
 </html>
