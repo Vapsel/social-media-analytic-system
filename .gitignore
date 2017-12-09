@@ -2,6 +2,7 @@
 .gradle/
 .idea/
 out/
+build/
 
 # Ignore files
 *.iml
