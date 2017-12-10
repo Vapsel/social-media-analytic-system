@@ -44,6 +44,7 @@ public class AnalysisProcessing {
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
         return preferences.entrySet().stream()
+                .filter(e -> e.getValue() > 4)
                 .sorted(Map.Entry.<NotionNodeData, Long>comparingByValue().reversed())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                         (e1, e2) -> e2, LinkedHashMap::new));
