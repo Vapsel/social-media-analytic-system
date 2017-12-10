@@ -33,7 +33,7 @@
     <h4>There are offers recommended for you:</h4>
     <ul>
         <li th:each="offer:${offers}">
-            <a th:href="'/offers/show/'+${offer.key}" th:text="'Oferta with rate '+${offer.value}"></a>
+            <a th:href="'/offers/'+${offer.key}" th:text="'Oferta with rate '+${offer.value}"></a>
         </li>
     </ul>
 </section>

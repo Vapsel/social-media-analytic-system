@@ -18,6 +18,7 @@ apply plugin: 'org.springframework.boot'
 
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: "${springBootVersion}"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "${springBootVersion}"
     compile group: 'org.springframework.social', name: 'spring-social-twitter', version: '1.1.2.RELEASE'
     compile group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "${springBootVersion}"

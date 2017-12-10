@@ -21,6 +21,6 @@ public class OfferData {
 
     private String name;
 
-    @OneToMany
+    @ManyToMany
     private Set<NotionNodeData> relatedNodes;
 }

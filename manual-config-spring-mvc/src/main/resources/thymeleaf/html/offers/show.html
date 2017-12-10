@@ -12,7 +12,7 @@
 <section>
     <div class="container">
         <h1>Show offer</h1>
-    <form th:action="'/offers/add/'+${id}" method="post" enctype="multipart/form-data">
+    <form th:action="'/offers/edit/'+${id}" method="post" enctype="multipart/form-data">
         <div class="row" th:object="${offer}">
             <div class="col-md-12">
                 Name: <input th:value="*{name}" th:type="text" th:name="offerName" required="required">

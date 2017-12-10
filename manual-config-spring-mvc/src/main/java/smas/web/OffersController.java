@@ -43,22 +43,26 @@ public class OffersController {
         return ADD_TEMPLATE;
     }
 
-    @RequestMapping(value = "/add/{offerId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit/{offerId}", method = RequestMethod.POST)
     public void actionAdd(String offerName, Long[] notions, HttpServletResponse response, @PathVariable Long offerId)
         throws IOException {
         List<NotionNodeData> relatedNodes = graphService.findNodesByIds(Arrays.asList(notions));
-        OfferData offer;
-        if (offerId == null) {
-            offer = new OfferData(null, offerName, new HashSet<>(relatedNodes));
-        } else  {
-            offer = offerDataService.findOfferById(offerId);
-            offer.setRelatedNodes(new HashSet<>(relatedNodes));
-        }
+        OfferData offer = offerDataService.findOfferById(offerId);
+        offer.setRelatedNodes(new HashSet<>(relatedNodes));
         offerDataService.save(offer);
         response.sendRedirect("/offers/add");
     }
 
-    @RequestMapping(value = "/show/{offerId}", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.POST)
+    public void actionAdd(String offerName, Long[] notions, HttpServletResponse response)
+        throws IOException {
+        List<NotionNodeData> relatedNodes = graphService.findNodesByIds(Arrays.asList(notions));
+        OfferData offer = new OfferData(null, offerName, new HashSet<>(relatedNodes));
+        offerDataService.save(offer);
+        response.sendRedirect("/offers/add");
+    }
+
+    @RequestMapping(value = "/{offerId}", method = RequestMethod.GET)
     public String loadShow(Model model, @PathVariable Long offerId){
         OfferData offer = offerDataService.findOfferById(offerId);
         List<Long> checkedNotionIds = offer.getRelatedNodes().stream()
